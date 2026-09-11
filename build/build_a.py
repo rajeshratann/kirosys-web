@@ -22,13 +22,7 @@ FACTS = [
     ("Entity type", "Private company limited by shares"),
     ("Incorporated", "13 July 2023, under the Companies Act, 2013"),
     ("Registered office", "Patna, Bihar, India"),
-    ("Share capital", "&#8377;10,00,000 &mdash; 1,00,000 equity shares of &#8377;10 each"),
-    ("Constitution", "Memorandum of Association (Table A) and Articles of Association (Table F)"),
-    ("Principal objects", "Publishing of operating systems and system software; development and "
-                          "distribution of applications, mobile and web software; IT-enabled services"),
 ]
-
-DIRECTORS = ["Rajesh Kumar", "Amarjeet Kumar", "Rakesh Kumar"]
 
 about_body = page_hero(
     "About", "About Kirosys",
@@ -82,12 +76,15 @@ about_body += """<section class="section">
 </section>
 
 <section class="section">
-  <div class="container split">
-    <div class="reveal">
+  <div class="container">
+    <div class="section-head reveal">
       <p class="eyebrow">Company information</p>
       <h2>Registered and accountable</h2>
       <p class="lead">Kirosys Technologies Private Limited is a company limited by shares, constituted
         under the Companies Act, 2013. The details below are drawn from our incorporation documents.</p>
+    </div>
+    <div class="split split--top">
+    <div class="reveal">
       <!-- TODO: add CIN, GSTIN and Udyam registration number here when you want them published. -->
       <table class="fact-table">
         <caption class="form-note" style="caption-side:bottom;text-align:left;padding-top:.75rem">
@@ -97,15 +94,11 @@ about_body += """<section class="section">
       </table>
     </div>
     <div class="reveal" data-delay="2">
-      <p class="eyebrow">Leadership</p>
-      <h2>Directors</h2>
-      <p class="lead">Kirosys was founded by three directors who remain involved in delivery and
-        client relationships day to day.</p>
-      <div class="grid grid-2" style="margin-top:1.5rem">%s</div>
-      <div class="callout" style="margin-top:1.5rem">%s
+      <div class="callout">%s
         <p>Looking for company documents, a vendor form or a compliance detail for onboarding?
           Email <a href="mailto:%s">%s</a> and we will send it across.</p>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -120,8 +113,6 @@ about_body += """<section class="section">
   <h3>%s</h3><p>%s</p></article>""" % (min(n, 5), tone, icon(ic), name, desc)
         for n, (ic, tone, name, desc) in enumerate(VALUES)),
     "".join("<tr><th scope=\"row\">%s</th><td>%s</td></tr>" % (k, v) for k, v in FACTS),
-    "".join("""<article class="card"><span class="card-ico">%s</span><h3>%s</h3>
-  <p>Director</p></article>""" % (icon("users"), d) for d in DIRECTORS),
     icon("info"), EMAIL, EMAIL,
 )
 

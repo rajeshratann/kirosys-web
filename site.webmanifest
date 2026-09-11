@@ -1,0 +1,13 @@
+{
+  "name": "Kirosys Technologies",
+  "short_name": "Kirosys",
+  "description": "Software development and IT services — secure, scalable and future-ready digital solutions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020D1C",
+  "theme_color": "#020D1C",
+  "icons": [
+    { "src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

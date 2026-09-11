@@ -1,1955 +1,421 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kirosys — Engineering the Future</title>
-  <meta name="description" content="Kirosys is a global technology company delivering software engineering, AI implementation, cloud architecture, game development, and enterprise solutions at scale.">
-  <meta property="og:title" content="Kirosys — Engineering the Future">
-  <meta property="og:description" content="Software. Games. AI. Cloud. Built to scale.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://kirosys.in">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><rect width='72' height='72' rx='14' fill='%23020D1F'/><line x1='22' y1='18' x2='22' y2='54' stroke='%2300C8A8' stroke-width='4.5' stroke-linecap='round'/><line x1='22' y1='36' x2='48' y2='18' stroke='%2300C8A8' stroke-width='4.5' stroke-linecap='round'/><line x1='22' y1='36' x2='50' y2='54' stroke='%2300C8A8' stroke-width='4.5' stroke-linecap='round'/><circle cx='50' cy='20' r='5.5' fill='%23E8A020'/></svg>">
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #020D1F;
-      --surface: #071628;
-      --card: #0C1F38;
-      --card-hover: #102540;
-      --teal: #00C8A8;
-      --teal-dim: rgba(0,200,168,0.10);
-      --teal-border: rgba(0,200,168,0.22);
-      --amber: #E8A020;
-      --amber-dim: rgba(232,160,32,0.12);
-      --purple: #9B7FEA;
-      --text-1: #E4EEF8;
-      --text-2: #6F8BAE;
-      --text-3: #304B6A;
-      --border: rgba(255,255,255,0.07);
-      --nav-h: 72px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text-1);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ──────────────── NAV ──────────────── */
-    nav {
-      position: fixed;
-      top: 0; width: 100%;
-      z-index: 200;
-      height: var(--nav-h);
-      transition: background 0.35s, backdrop-filter 0.35s;
-    }
-    nav.scrolled {
-      background: rgba(2,13,31,0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      max-width: 1280px; margin: 0 auto;
-      height: 100%;
-      padding: 0 clamp(1.25rem, 4vw, 3rem);
-    }
-    .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-    .logo-icon { width: 38px; height: 38px; flex-shrink: 0; }
-    .logo-text {
-      font-size: 1.3rem; font-weight: 800;
-      letter-spacing: 0.08em; color: var(--text-1);
-      text-transform: uppercase;
-    }
-    .logo-text span { color: var(--teal); }
-    .nav-links { display: flex; align-items: center; gap: 2.25rem; list-style: none; }
-    .nav-links a {
-      color: var(--text-2); text-decoration: none;
-      font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text-1); }
-    .nav-cta {
-      background: var(--teal) !important;
-      color: #020D1F !important;
-      padding: 0.5625rem 1.375rem;
-      border-radius: 2px;
-      font-weight: 700 !important;
-      font-size: 0.8125rem;
-      letter-spacing: 0.04em !important;
-      text-transform: uppercase;
-      transition: opacity 0.2s !important;
-    }
-    .nav-cta:hover { opacity: 0.82; }
-    .nav-hamburger {
-      display: none; flex-direction: column; gap: 5px;
-      background: none; border: none; cursor: pointer; padding: 8px;
-    }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text-2); border-radius: 1px; }
-    .mobile-menu {
-      display: none;
-      position: fixed; top: var(--nav-h); left: 0; right: 0;
-      background: rgba(2,13,31,0.97);
-      backdrop-filter: blur(20px);
-      padding: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      z-index: 199;
-      flex-direction: column; gap: 1rem;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      color: var(--text-2); text-decoration: none;
-      font-size: 1rem; font-weight: 500; padding: 0.5rem 0;
-      border-bottom: 1px solid var(--border);
-      transition: color 0.2s;
-    }
-    .mobile-menu a:hover { color: var(--text-1); }
-
-    /* ──────────────── HERO ──────────────── */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex; align-items: center;
-      overflow: hidden;
-      padding-top: var(--nav-h);
-    }
-    #hero-canvas {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-    }
-    .hero-inner {
-      position: relative; z-index: 2;
-      max-width: 1280px; margin: 0 auto;
-      width: 100%;
-      padding: clamp(4rem,8vh,6rem) clamp(1.25rem,4vw,3rem);
-      display: grid;
-      grid-template-columns: 1fr 520px;
-      gap: 3rem;
-      align-items: center;
-    }
-    .hero-eyebrow {
-      display: flex; align-items: center; gap: 0.75rem;
-      color: var(--teal);
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 1.75rem;
-    }
-    .hero-eyebrow span { display: block; width: 36px; height: 2px; background: var(--teal); }
-    .hero-title {
-      font-size: clamp(3.25rem, 6.5vw, 6rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 0.92;
-      margin-bottom: 2rem;
-    }
-    .hero-title .t-teal { color: var(--teal); }
-    .hero-title .t-amber { color: var(--amber); }
-    .hero-desc {
-      color: var(--text-2);
-      font-size: 1.0625rem; line-height: 1.72;
-      max-width: 500px;
-      margin-bottom: 2.5rem;
-    }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--teal); color: #020D1F;
-      padding: 0.9375rem 2.125rem;
-      font-weight: 700; font-size: 0.9rem;
-      letter-spacing: 0.03em;
-      border-radius: 2px; border: none;
-      cursor: pointer; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      transition: opacity 0.2s, transform 0.2s;
-      text-transform: uppercase;
-    }
-    .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
-    .btn-ghost {
-      color: var(--text-1);
-      padding: 0.9375rem 2.125rem;
-      font-weight: 600; font-size: 0.9rem;
-      letter-spacing: 0.02em;
-      border-radius: 2px;
-      border: 1px solid var(--border);
-      cursor: pointer; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      transition: border-color 0.2s, background 0.2s;
-      background: transparent;
-    }
-    .btn-ghost:hover { border-color: var(--teal); background: var(--teal-dim); }
-
-    /* Orbital viz */
-    .hero-viz {
-      display: flex; align-items: center; justify-content: center;
-      position: relative; height: 480px;
-    }
-    .orbital-wrap {
-      position: relative; width: 440px; height: 440px;
-    }
-    .orb-core {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 80px; height: 80px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #00E5C4, #006B5A);
-      box-shadow: 0 0 40px rgba(0,200,168,0.5), 0 0 80px rgba(0,200,168,0.2);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 10;
-    }
-    .orb-core-letter {
-      font-size: 1.75rem; font-weight: 900; color: #020D1F;
-      letter-spacing: -0.02em;
-    }
-    .orb-ring {
-      position: absolute; top: 50%; left: 50%;
-      border-radius: 50%;
-      border: 1px solid rgba(0,200,168,0.18);
-      transform-origin: center center;
-    }
-    .orb-ring-1 { width: 160px; height: 160px; margin: -80px 0 0 -80px; transform: rotateX(72deg) rotateZ(0deg); }
-    .orb-ring-2 { width: 260px; height: 260px; margin: -130px 0 0 -130px; transform: rotateX(65deg) rotateZ(45deg); }
-    .orb-ring-3 { width: 380px; height: 380px; margin: -190px 0 0 -190px; transform: rotateX(70deg) rotateZ(-30deg); }
-    .orb-ring-4 { width: 430px; height: 430px; margin: -215px 0 0 -215px; transform: rotateX(60deg) rotateZ(20deg); border-color: rgba(232,160,32,0.12); }
-    .orb-node {
-      position: absolute; width: 36px; height: 36px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.55rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; text-align: center;
-      line-height: 1.1;
-    }
-    .node-teal { background: rgba(0,200,168,0.15); border: 1px solid rgba(0,200,168,0.4); color: var(--teal); }
-    .node-amber { background: rgba(232,160,32,0.12); border: 1px solid rgba(232,160,32,0.35); color: var(--amber); }
-    .node-purple { background: rgba(155,127,234,0.12); border: 1px solid rgba(155,127,234,0.35); color: var(--purple); }
-
-    /* Hero stats */
-    .hero-stats {
-      display: grid; grid-template-columns: repeat(4,1fr);
-      gap: 1px; background: var(--border);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .stat-item {
-      background: var(--bg); padding: 1.5rem 1.75rem;
-      position: relative; overflow: hidden;
-    }
-    .stat-item::before {
-      content: ''; position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: var(--teal); transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-    }
-    .stat-item:hover::before { transform: scaleX(1); }
-    .stat-n {
-      font-size: 2.25rem; font-weight: 800;
-      letter-spacing: -0.04em; line-height: 1;
-      color: var(--text-1);
-      font-variant-numeric: tabular-nums;
-      margin-bottom: 0.25rem;
-    }
-    .stat-n .u { color: var(--teal); }
-    .stat-l { color: var(--text-2); font-size: 0.8125rem; font-weight: 500; }
-
-    /* ──────────────── MARQUEE ──────────────── */
-    .marquee-band {
-      overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 0;
-      background: rgba(0,200,168,0.025);
-    }
-    .marquee-track { display: flex; width: max-content; gap: 3.5rem; }
-    .marquee-track.anim { animation: mq 28s linear infinite; }
-    .mq-item {
-      display: flex; align-items: center; gap: 0.875rem;
-      color: var(--text-3);
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; white-space: nowrap;
-    }
-    .mq-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
-    @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-    /* ──────────────── SECTION COMMON ──────────────── */
-    section { padding: clamp(5rem,10vw,9rem) 0; }
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 clamp(1.25rem,4vw,3rem); }
-    .sec-eyebrow {
-      display: flex; align-items: center; gap: 0.75rem;
-      color: var(--teal);
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .sec-eyebrow span { display: block; width: 24px; height: 2px; background: var(--teal); }
-    .sec-title {
-      font-size: clamp(2rem,4vw,3.25rem);
-      font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;
-      text-wrap: balance;
-    }
-    .sec-sub {
-      color: var(--text-2); font-size: 1.0625rem; line-height: 1.7;
-      max-width: 520px;
-    }
-
-    /* ──────────────── SERVICES ──────────────── */
-    .services-head {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 3rem; align-items: end;
-      margin-bottom: 4rem;
-    }
-    .services-grid {
-      display: grid; grid-template-columns: repeat(4,1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border);
-    }
-    .svc-card {
-      background: var(--card); padding: 2.25rem 2rem;
-      position: relative; overflow: hidden;
-      transition: background 0.3s;
-    }
-    .svc-card:hover { background: var(--card-hover); }
-    .svc-card::after {
-      content: ''; position: absolute;
-      bottom: 0; left: 0; right: 0; height: 2px;
-      background: var(--teal);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-    }
-    .svc-card:hover::after { transform: scaleX(1); }
-    .svc-card.amber::after { background: var(--amber); }
-    .svc-card.purple::after { background: var(--purple); }
-    .svc-icon { width: 44px; height: 44px; margin-bottom: 1.5rem; }
-    .svc-name {
-      font-size: 1rem; font-weight: 700;
-      letter-spacing: -0.01em; margin-bottom: 0.625rem;
-    }
-    .svc-desc { color: var(--text-2); font-size: 0.875rem; line-height: 1.6; }
-
-    /* ──────────────── PRODUCTS ──────────────── */
-    .products-section { background: var(--surface); }
-    .products-head {
-      display: flex; align-items: flex-end; justify-content: space-between;
-      margin-bottom: 4rem; gap: 2rem; flex-wrap: wrap;
-    }
-    .products-grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
-      grid-template-rows: auto auto;
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border);
-    }
-    .prod-card {
-      background: var(--bg); padding: 2.5rem 2.25rem;
-      position: relative; overflow: hidden;
-      transition: background 0.3s;
-    }
-    .prod-card:hover { background: #071628; }
-    .prod-card.feat {
-      grid-row: 1 / 3;
-      padding: 3rem 2.75rem;
-      border-right: 1px solid var(--border);
-    }
-    .prod-tag {
-      display: inline-block;
-      padding: 0.25rem 0.625rem;
-      font-size: 0.6875rem; font-weight: 700;
-      letter-spacing: 0.09em; text-transform: uppercase;
-      border-radius: 2px; margin-bottom: 1.5rem;
-    }
-    .tag-game { background: var(--amber-dim); color: var(--amber); }
-    .tag-finance { background: var(--teal-dim); color: var(--teal); }
-    .tag-web { background: rgba(155,127,234,0.12); color: var(--purple); }
-    .tag-flagship { background: var(--teal); color: #020D1F; }
-    .prod-name {
-      font-size: 1.375rem; font-weight: 700;
-      letter-spacing: -0.02em; margin-bottom: 0.75rem;
-    }
-    .prod-card.feat .prod-name { font-size: 2rem; }
-    .prod-desc { color: var(--text-2); font-size: 0.9375rem; line-height: 1.65; margin-bottom: 1.75rem; }
-    .prod-link {
-      color: var(--teal); text-decoration: none;
-      font-size: 0.875rem; font-weight: 600; letter-spacing: 0.02em;
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      transition: gap 0.25s;
-    }
-    .prod-link:hover { gap: 0.8rem; }
-    .prod-visual {
-      margin-top: 2rem;
-      border-radius: 3px; overflow: hidden;
-      background: var(--card);
-      height: 160px; position: relative;
-    }
-    .prod-card.feat .prod-visual { height: 220px; margin-top: 2.5rem; }
-    .pv-canvas { width: 100%; height: 100%; display: block; }
-
-    /* ──────────────── CLOUD ──────────────── */
-    .cloud-bg { position: relative; overflow: hidden; }
-    .cloud-glow {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 900px; height: 900px;
-      background: radial-gradient(circle, rgba(0,200,168,0.04) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .cloud-head { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end; margin-bottom: 4rem; }
-    .cloud-grid {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border);
-      margin-bottom: 4rem;
-    }
-    .cloud-card {
-      background: var(--card); padding: 3rem 2.5rem;
-      position: relative; overflow: hidden;
-      transition: background 0.3s;
-    }
-    .cloud-card:hover { background: var(--card-hover); }
-    .cloud-pname {
-      font-size: 2rem; font-weight: 900;
-      letter-spacing: -0.03em; margin-bottom: 0.5rem;
-    }
-    .cloud-pname.aws { color: #FF9900; }
-    .cloud-pname.gcp { color: #4A90E2; }
-    .cloud-pname.azure { color: #0089D6; }
-    .cloud-pfull { color: var(--text-2); font-size: 0.8125rem; font-weight: 500; margin-bottom: 1.75rem; }
-    .cloud-desc { color: var(--text-2); font-size: 0.9375rem; line-height: 1.65; margin-bottom: 1.75rem; }
-    .cloud-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .chip {
-      padding: 0.3rem 0.625rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      font-size: 0.75rem; color: var(--text-2); font-weight: 500;
-    }
-    .cloud-card:hover .chip { border-color: var(--teal-border); }
-
-    .process-strip {
-      display: grid; grid-template-columns: repeat(4,1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border);
-    }
-    .process-step {
-      background: var(--card); padding: 2rem 1.75rem;
-      position: relative;
-    }
-    .process-step::before {
-      content: ''; position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: var(--teal); opacity: 0.4;
-    }
-    .step-n {
-      font-size: 0.6875rem; font-weight: 700;
-      letter-spacing: 0.14em; color: var(--teal);
-      text-transform: uppercase; margin-bottom: 1rem;
-      font-variant-numeric: tabular-nums;
-    }
-    .step-title { font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
-    .step-desc { color: var(--text-2); font-size: 0.875rem; line-height: 1.6; }
-
-    /* ──────────────── ABOUT ──────────────── */
-    .about-section { background: var(--surface); }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-    .about-img-wrap {
-      position: relative; border: 1px solid var(--border);
-      overflow: hidden; border-radius: 2px;
-    }
-    .about-canvas { width: 100%; height: 400px; display: block; }
-    .about-badge {
-      position: absolute; bottom: 2rem; left: 2rem;
-      background: rgba(2,13,31,0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--teal-border);
-      padding: 1.25rem 1.5rem;
-      border-radius: 2px;
-    }
-    .badge-n { font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; color: var(--teal); }
-    .badge-l { color: var(--text-2); font-size: 0.875rem; font-weight: 500; margin-top: 0.25rem; }
-    .about-content { padding-top: 1rem; }
-    .about-body { color: var(--text-2); font-size: 1.0625rem; line-height: 1.75; margin: 1.75rem 0 2.5rem; }
-    .pillars { display: grid; gap: 1.25rem; }
-    .pillar {
-      display: grid; grid-template-columns: 3px 1fr;
-      gap: 1.25rem; align-items: start;
-    }
-    .pillar-bar { width: 3px; background: var(--teal); margin-top: 0.15rem; align-self: stretch; min-height: 40px; }
-    .pillar.amber .pillar-bar { background: var(--amber); }
-    .pillar.purple .pillar-bar { background: var(--purple); }
-    .pillar-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .pillar-desc { color: var(--text-2); font-size: 0.875rem; line-height: 1.6; }
-
-    /* ──────────────── TECH STACK ──────────────── */
-    .stack-section { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .stack-grid { display: flex; flex-wrap: wrap; gap: 0.625rem; margin-top: 3rem; }
-    .stack-pill {
-      padding: 0.5625rem 1.125rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      font-size: 0.875rem; color: var(--text-2); font-weight: 500;
-      background: var(--card);
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-      cursor: default;
-    }
-    .stack-pill:hover { border-color: var(--teal-border); color: var(--teal); background: var(--teal-dim); }
-
-    /* ──────────────── REVIEWS ──────────────── */
-    .reviews-section {
-      background:
-        linear-gradient(180deg, rgba(2,13,31,0.98), rgba(7,22,40,0.88)),
-        radial-gradient(circle at 18% 20%, rgba(0,200,168,0.12), transparent 30rem);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .reviews-head {
-      display: grid;
-      grid-template-columns: 1fr 0.8fr;
-      gap: 3rem;
-      align-items: end;
-      margin-bottom: 3rem;
-    }
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(280px, 1fr));
-      gap: 1px;
-      overflow-x: auto;
-      background: var(--border);
-      border: 1px solid var(--border);
-      scrollbar-width: thin;
-      scrollbar-color: var(--teal) transparent;
-    }
-    .review-card {
-      min-height: 280px;
-      padding: 1.75rem;
-      background:
-        radial-gradient(circle at var(--card-x, 50%) var(--card-y, 0%), rgba(0,200,168,0.12), transparent 14rem),
-        linear-gradient(145deg, rgba(12,31,56,0.95), rgba(2,13,31,0.9));
-      position: relative;
-      overflow: hidden;
-    }
-    .review-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--teal), var(--amber));
-    }
-    .review-stars {
-      color: var(--amber);
-      font-size: 0.85rem;
-      letter-spacing: 0.18em;
-      margin-bottom: 1.15rem;
-    }
-    .review-quote {
-      color: var(--text-1);
-      font-size: 0.98rem;
-      line-height: 1.68;
-      margin-bottom: 1.5rem;
-    }
-    .review-author {
-      color: var(--text-2);
-      font-size: 0.82rem;
-      font-weight: 700;
-    }
-    .review-product {
-      color: var(--teal);
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-top: 0.25rem;
-    }
-
-    /* ──────────────── CONTACT ──────────────── */
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-    .contact-info { padding-top: 0.5rem; }
-    .contact-body { color: var(--text-2); font-size: 1.0625rem; line-height: 1.72; margin: 1.5rem 0 2.5rem; }
-    .contact-items { display: grid; gap: 1.5rem; }
-    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
-    .ci-icon {
-      width: 40px; height: 40px; border-radius: 2px;
-      background: var(--teal-dim); border: 1px solid var(--teal-border);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; color: var(--teal);
-    }
-    .ci-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.2rem; }
-    .ci-val { font-size: 0.9375rem; color: var(--text-1); font-weight: 500; line-height: 1.5; }
-    .contact-form { display: grid; gap: 1rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group { display: grid; gap: 0.4rem; }
-    .form-label { font-size: 0.75rem; font-weight: 700; color: var(--text-2); letter-spacing: 0.08em; text-transform: uppercase; }
-    .form-input, .form-select, .form-textarea {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 2px; padding: 0.875rem 1rem;
-      color: var(--text-1); font-size: 0.9375rem; font-family: inherit;
-      transition: border-color 0.2s; width: 100%;
-      -webkit-appearance: none;
-    }
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      outline: none; border-color: var(--teal);
-    }
-    .form-input::placeholder, .form-textarea::placeholder { color: var(--text-3); }
-    .form-textarea { resize: vertical; min-height: 130px; }
-    .form-select option { background: var(--card); }
-    .form-honey {
-      position: absolute;
-      left: -10000px;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* ──────────────── FOOTER ──────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 3rem 0;
-    }
-    .footer-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1.5rem;
-    }
-    .footer-copy { color: var(--text-3); font-size: 0.875rem; }
-    .footer-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
-    .footer-links a { color: var(--text-3); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--text-2); }
-
-    /* ──────────────── REVEAL ──────────────── */
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-d1 { transition-delay: 0.1s; }
-    .reveal-d2 { transition-delay: 0.2s; }
-    .reveal-d3 { transition-delay: 0.3s; }
-
-    /* ──────────────── RESPONSIVE ──────────────── */
-    @media (max-width: 1100px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-viz { display: none; }
-      .services-head { grid-template-columns: 1fr; }
-      .services-grid { grid-template-columns: repeat(2,1fr); }
-      .cloud-head { grid-template-columns: 1fr; }
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .contact-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 760px) {
-      .hero-stats { grid-template-columns: repeat(2,1fr); }
-      .services-grid { grid-template-columns: 1fr; }
-      .products-grid { grid-template-columns: 1fr; }
-      .prod-card.feat { grid-row: auto; border-right: none; border-bottom: 1px solid var(--border); }
-      .cloud-grid { grid-template-columns: 1fr; }
-      .process-strip { grid-template-columns: repeat(2,1fr); }
-      .reviews-head { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
-      .marquee-track { animation: none; }
-    }
-
-    /* ──────────────── FUTURISTIC POLISH ──────────────── */
-    body {
-      background:
-        radial-gradient(circle at 14% 18%, rgba(0,200,168,0.16), transparent 28rem),
-        radial-gradient(circle at 86% 8%, rgba(232,160,32,0.11), transparent 24rem),
-        radial-gradient(circle at 82% 62%, rgba(155,127,234,0.13), transparent 26rem),
-        linear-gradient(180deg, #020D1F 0%, #041326 48%, #020D1F 100%);
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.72), rgba(0,0,0,0.12) 42%, rgba(0,0,0,0.5));
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background:
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 7px);
-      opacity: 0.2;
-      mix-blend-mode: screen;
-    }
-    .cursor-aura {
-      position: fixed;
-      width: 320px;
-      height: 320px;
-      left: -160px;
-      top: -160px;
-      z-index: 1;
-      pointer-events: none;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(0,200,168,0.14), transparent 68%);
-      opacity: 0;
-      transform: translate3d(var(--mx, 50vw), var(--my, 50vh), 0);
-      transition: opacity 0.3s ease;
-    }
-    body.has-pointer .cursor-aura { opacity: 1; }
-    nav {
-      background: linear-gradient(180deg, rgba(2,13,31,0.78), rgba(2,13,31,0));
-    }
-    nav.scrolled {
-      box-shadow: 0 18px 70px rgba(0,0,0,0.28);
-    }
-    .logo-icon { filter: drop-shadow(0 0 18px rgba(0,200,168,0.22)); }
-    .nav-links a {
-      position: relative;
-    }
-    .nav-links a:not(.nav-cta)::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -0.55rem;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--teal), transparent);
-      opacity: 0;
-      transform: scaleX(0.4);
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .nav-links a:not(.nav-cta):hover::after {
-      opacity: 1;
-      transform: scaleX(1);
-    }
-    .hero {
-      isolation: isolate;
-      min-height: 94vh;
-    }
-    .hero::before,
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    .hero::before {
-      z-index: 0;
-      background:
-        linear-gradient(115deg, rgba(2,13,31,0.96) 0%, rgba(2,13,31,0.7) 48%, rgba(2,13,31,0.2) 100%),
-        radial-gradient(circle at 74% 45%, rgba(0,200,168,0.18), transparent 32rem),
-        linear-gradient(90deg, transparent 0 49.85%, rgba(0,200,168,0.22) 50%, transparent 50.15% 100%);
-    }
-    .hero::after {
-      z-index: 1;
-      background: linear-gradient(180deg, transparent 0%, rgba(2,13,31,0.88) 96%);
-    }
-    #hero-canvas {
-      z-index: 0;
-      opacity: 0.82;
-    }
-    .hero-left {
-      position: relative;
-    }
-    .hero-left::before {
-      content: '';
-      position: absolute;
-      left: -1.25rem;
-      top: 0.4rem;
-      bottom: 0.25rem;
-      width: 1px;
-      background: linear-gradient(180deg, transparent, rgba(0,200,168,0.55), transparent);
-    }
-    .hero-title {
-      text-shadow: 0 18px 70px rgba(0,0,0,0.36);
-    }
-    .hero-title .t-teal,
-    .hero-title .t-amber {
-      position: relative;
-      display: inline-block;
-    }
-    .hero-title .t-teal::after,
-    .hero-title .t-amber::after {
-      content: attr(data-glitch);
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(0);
-      animation: glitchText 5.2s infinite;
-    }
-    .hero-title .t-teal::after { color: rgba(0,229,196,0.55); }
-    .hero-title .t-amber::after { color: rgba(232,160,32,0.42); animation-delay: 0.9s; }
-    @keyframes glitchText {
-      0%, 88%, 100% { opacity: 0; transform: translateX(0); clip-path: inset(0 0 0 0); }
-      90% { opacity: 0.8; transform: translateX(3px); clip-path: inset(8% 0 68% 0); }
-      92% { opacity: 0.45; transform: translateX(-4px); clip-path: inset(58% 0 18% 0); }
-      94% { opacity: 0.55; transform: translateX(2px); clip-path: inset(32% 0 42% 0); }
-    }
-    .hero-proof {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.7rem;
-      margin: -1rem 0 2rem;
-    }
-    .proof-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.45rem 0.72rem;
-      color: var(--text-2);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,0.09);
-      background: rgba(7,22,40,0.58);
-      backdrop-filter: blur(14px);
-      border-radius: 3px;
-    }
-    .proof-chip::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--teal);
-      box-shadow: 0 0 14px var(--teal);
-    }
-    .btn-primary {
-      box-shadow: 0 12px 34px rgba(0,200,168,0.25);
-    }
-    .btn-primary:hover {
-      box-shadow: 0 18px 48px rgba(0,200,168,0.32);
-    }
-    .hero-viz {
-      perspective: 1000px;
-    }
-    .viz-console {
-      position: relative;
-      width: min(100%, 530px);
-      min-height: 520px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background:
-        linear-gradient(140deg, rgba(12,31,56,0.78), rgba(2,13,31,0.38)),
-        linear-gradient(transparent 0 49%, rgba(0,200,168,0.08) 50%, transparent 51% 100%);
-      background-size: auto, 100% 18px;
-      border-radius: 6px;
-      box-shadow:
-        0 40px 110px rgba(0,0,0,0.34),
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        inset 0 0 80px rgba(0,200,168,0.04);
-      transform: rotateX(4deg) rotateY(-8deg);
-      animation: consoleFloat 7s ease-in-out infinite;
-      overflow: hidden;
-    }
-    .viz-console::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      background: linear-gradient(120deg, transparent 8%, rgba(0,200,168,0.18), transparent 34%, rgba(232,160,32,0.12), transparent 62%);
-      transform: translateX(-80%);
-      animation: consoleSweep 6.5s ease-in-out infinite;
-      pointer-events: none;
-    }
-    .viz-console::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border: 1px solid rgba(0,200,168,0.16);
-      border-radius: 6px;
-      pointer-events: none;
-    }
-    .console-topbar {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      color: var(--text-2);
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-    .console-lights {
-      display: flex;
-      gap: 0.4rem;
-    }
-    .console-lights span {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--teal);
-      box-shadow: 0 0 14px rgba(0,200,168,0.68);
-    }
-    .console-lights span:nth-child(2) { background: var(--amber); box-shadow: 0 0 14px rgba(232,160,32,0.58); }
-    .console-lights span:nth-child(3) { background: var(--purple); box-shadow: 0 0 14px rgba(155,127,234,0.58); }
-    .orbital-wrap {
-      margin: 0 auto;
-      transform: scale(0.86);
-    }
-    .console-panel {
-      position: absolute;
-      z-index: 3;
-      right: 1rem;
-      bottom: 1rem;
-      left: 1rem;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 1px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .console-readout {
-      min-height: 92px;
-      padding: 1rem;
-      background: rgba(2,13,31,0.82);
-      backdrop-filter: blur(16px);
-    }
-    .readout-label {
-      color: var(--text-3);
-      font-size: 0.64rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
-    .readout-value {
-      color: var(--text-1);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.86rem;
-      line-height: 1.6;
-    }
-    .readout-value strong {
-      color: var(--teal);
-      font-weight: 700;
-    }
-    @keyframes consoleFloat {
-      0%, 100% { transform: rotateX(4deg) rotateY(-8deg) translateY(0); }
-      50% { transform: rotateX(2deg) rotateY(-5deg) translateY(-12px); }
-    }
-    @keyframes consoleSweep {
-      0%, 32% { transform: translateX(-92%); opacity: 0; }
-      46% { opacity: 1; }
-      68%, 100% { transform: translateX(92%); opacity: 0; }
-    }
-    .stat-item,
-    .svc-card,
-    .prod-card,
-    .cloud-card,
-    .process-step,
-    .stack-pill,
-    .contact-form {
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.045);
-    }
-    .svc-card,
-    .prod-card,
-    .cloud-card,
-    .process-step {
-      transform-style: preserve-3d;
-    }
-    .svc-card:hover,
-    .prod-card:hover,
-    .cloud-card:hover,
-    .process-step:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 70px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.08);
-    }
-    .svc-card::before,
-    .prod-card::before,
-    .cloud-card::before,
-    .process-step::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at var(--card-x, 50%) var(--card-y, 0%), rgba(0,200,168,0.14), transparent 17rem);
-      opacity: 0;
-      transition: opacity 0.25s;
-    }
-    .svc-card:hover::before,
-    .prod-card:hover::before,
-    .cloud-card:hover::before,
-    .process-step:hover::after {
-      opacity: 1;
-    }
-    .prod-visual,
-    .about-img-wrap,
-    .contact-form {
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 24px 80px rgba(0,0,0,0.22);
-    }
-    .products-section,
-    .about-section {
-      background:
-        linear-gradient(180deg, rgba(7,22,40,0.92), rgba(4,17,33,0.94)),
-        radial-gradient(circle at 20% 20%, rgba(155,127,234,0.11), transparent 30rem);
-    }
-    .cloud-bg::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(120deg, transparent 0 18%, rgba(0,200,168,0.04) 18% 18.2%, transparent 18.2% 100%),
-        linear-gradient(60deg, transparent 0 68%, rgba(232,160,32,0.04) 68% 68.2%, transparent 68.2% 100%);
-      background-size: 220px 220px;
-    }
-    .stack-pill {
-      position: relative;
-      overflow: hidden;
-    }
-    .stack-pill::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(100deg, transparent, rgba(255,255,255,0.12), transparent);
-      transform: translateX(-130%);
-      transition: transform 0.55s;
-    }
-    .stack-pill:hover::after {
-      transform: translateX(130%);
-    }
-    .contact-form {
-      padding: 1.25rem;
-      background:
-        linear-gradient(145deg, rgba(12,31,56,0.9), rgba(7,22,40,0.68)),
-        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
-      background-size: auto, 100% 46px;
-      border-radius: 6px;
-    }
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
-      box-shadow: 0 0 0 3px rgba(0,200,168,0.11), 0 0 28px rgba(0,200,168,0.09);
-    }
-    @media (max-width: 1100px) {
-      .hero-viz { display: flex; }
-      .viz-console { min-height: 440px; transform: none; animation: none; }
-      .orbital-wrap { transform: scale(0.76); }
-    }
-    @media (max-width: 760px) {
-      .hero { min-height: auto; }
-      .hero-inner { padding-top: 4.5rem; gap: 1.5rem; }
-      .hero-left::before { display: none; }
-      .hero-proof { margin-top: -0.7rem; }
-      .viz-console { min-height: 390px; }
-      .orbital-wrap { transform: scale(0.62); transform-origin: top center; }
-      .console-panel { grid-template-columns: 1fr; }
-      .console-readout { min-height: 70px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .viz-console,
-      .viz-console::before,
-      .hero-title .t-teal::after,
-      .hero-title .t-amber::after {
-        animation: none;
-      }
-      .cursor-aura { display: none; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kirosys Technologies &mdash; Software, Cloud &amp; IT Services Company</title>
+<meta name="description" content="Kirosys Technologies Private Limited designs, develops and delivers custom software, mobile apps, cloud, AI and IT consulting solutions for businesses, institutions and government teams.">
+<link rel="canonical" href="https://kirosys.in/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kirosys Technologies">
+<meta property="og:title" content="Kirosys Technologies &mdash; Software, Cloud &amp; IT Services Company">
+<meta property="og:description" content="Kirosys Technologies Private Limited designs, develops and delivers custom software, mobile apps, cloud, AI and IT consulting solutions for businesses, institutions and government teams.">
+<meta property="og:url" content="https://kirosys.in/">
+<meta property="og:image" content="https://kirosys.in/assets/img/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#020D1C">
+<link rel="icon" href="assets/img/icon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/img/icon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<script>document.documentElement.classList.add("js");</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Kirosys Technologies",
+  "legalName": "Kirosys Technologies Private Limited",
+  "url": "https://kirosys.in/",
+  "logo": "https://kirosys.in/assets/img/logo-720.png",
+  "image": "https://kirosys.in/assets/img/og-cover.jpg",
+  "description": "Kirosys Technologies Private Limited is a software development and IT services company building secure, scalable and future-ready digital solutions.",
+  "foundingDate": "2023-07-13",
+  "email": "support@kirosys.in",
+  "telephone": "+91-82988-66066",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "New Dariyapur Colony, Suryamandir, Khairatali",
+    "addressLocality": "Patna",
+    "postalCode": "804453",
+    "addressRegion": "Bihar",
+    "addressCountry": "IN"
+  },
+  "areaServed": "IN",
+  "knowsAbout": ["Custom software development","Mobile app development","Cloud and DevOps","AI and data solutions","IT consulting","Web and portal development"]
+}
+</script>
 </head>
 <body>
-<div class="cursor-aura" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="topbar">
+  <div class="container topbar-inner">
+    <span class="topbar-tag">Building secure, scalable and future-ready solutions</span>
+    <div class="topbar-right">
+      <a href="mailto:support@kirosys.in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span>support@kirosys.in</span></a>
+      <a href="tel:+918298866066"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+91 82988 66066</span></a>
+      <!-- Social profiles: add the real URLs, then delete these comment markers.
+      <span class="topbar-social">
+        <a href="" aria-label="Kirosys on LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-12h4v1.5A6 6 0 0 1 16 8z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="" aria-label="Kirosys on GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+        <a href="" aria-label="Kirosys on YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 17a24 24 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49 49 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24 24 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49 49 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></a>
+      </span>
+      -->
+    </div>
+  </div>
+</div>
 
-<!-- ═══════════════ NAV ═══════════════ -->
-<nav id="main-nav">
-  <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="6" fill="#020D1F"/>
-        <rect x="0.75" y="0.75" width="38.5" height="38.5" rx="5.5" stroke="#00C8A8" stroke-opacity="0.25" stroke-width="1.5"/>
-        <polygon points="20,4 34,12 34,28 20,36 6,28 6,12" fill="none" stroke="#00C8A8" stroke-opacity="0.12" stroke-width="1"/>
-        <line x1="13" y1="11" x2="13" y2="29" stroke="#00C8A8" stroke-width="2.2" stroke-linecap="round"/>
-        <line x1="13" y1="20" x2="26" y2="11" stroke="#00C8A8" stroke-width="2.2" stroke-linecap="round"/>
-        <line x1="13" y1="20" x2="27" y2="29" stroke="#00C8A8" stroke-width="2.2" stroke-linecap="round"/>
-        <circle cx="28" cy="13" r="2.5" fill="#E8A020"/>
-      </svg>
-      <span class="logo-text">KIRO<span>SYS</span></span>
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="Kirosys Technologies &mdash; home">
+      <img src="assets/img/mark-128.png" alt="" width="38" height="38" decoding="async">
+      <span class="brand-text"><span class="brand-name">KIROSYS</span><span class="brand-sub">Technologies</span></span>
     </a>
-    <ul class="nav-links">
-      <li><a href="services.html">Services</a></li>
-      <li><a href="products.html">Products</a></li>
-      <li><a href="cloud.html">Cloud</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html" class="nav-cta">Get In Touch</a></li>
-    </ul>
-    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<div class="mobile-menu" id="mobile-menu">
-  <a href="services.html" onclick="closeMobileMenu()">Services</a>
-  <a href="products.html" onclick="closeMobileMenu()">Products</a>
-  <a href="cloud.html" onclick="closeMobileMenu()">Cloud</a>
-  <a href="about.html" onclick="closeMobileMenu()">About</a>
-  <a href="contact.html" onclick="closeMobileMenu()">Get In Touch</a>
-</div>
-
-<!-- ═══════════════ HERO ═══════════════ -->
-<section class="hero" id="hero">
-  <canvas id="hero-canvas"></canvas>
-  <div class="hero-inner">
-    <div class="hero-left">
-      <div class="hero-eyebrow"><span></span>Global Technology Company</div>
-      <h1 class="hero-title">
-        <span style="display:block">Building</span>
-        <span style="display:block" class="t-teal" data-glitch="Software">Software</span>
-        <span style="display:block">That</span>
-        <span style="display:block" class="t-amber" data-glitch="Scales.">Scales.</span>
-      </h1>
-      <p class="hero-desc">
-        Kirosys engineers high-performance software, AI systems, cloud infrastructure, and immersive games for enterprises and startups worldwide.
-      </p>
-      <div class="hero-proof" aria-label="Kirosys delivery strengths">
-        <span class="proof-chip">AI Native</span>
-        <span class="proof-chip">Cloud Hardened</span>
-        <span class="proof-chip">Product Teams</span>
-      </div>
-      <div class="hero-actions">
-        <a href="contact.html" class="btn-primary">Start a Project
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="products.html" class="btn-ghost">View Our Work</a>
-      </div>
-    </div>
-    <div class="hero-viz">
-      <div class="viz-console">
-        <div class="console-topbar">
-          <span>Kirosys Systems Grid</span>
-          <span class="console-lights"><span></span><span></span><span></span></span>
-        </div>
-        <div class="orbital-wrap" id="orbital-wrap">
-          <div class="orb-ring orb-ring-1"></div>
-          <div class="orb-ring orb-ring-2"></div>
-          <div class="orb-ring orb-ring-3"></div>
-          <div class="orb-ring orb-ring-4"></div>
-          <div class="orb-core"><span class="orb-core-letter">K</span></div>
-        </div>
-        <div class="console-panel">
-          <div class="console-readout">
-            <div class="readout-label">Active Build Pipeline</div>
-            <div class="readout-value" id="pipeline-readout"><strong>deploy</strong> --region global --zero-downtime</div>
-          </div>
-          <div class="console-readout">
-            <div class="readout-label">System Status</div>
-            <div class="readout-value"><strong>99.9%</strong> uptime<br><strong>24/7</strong> response</div>
-          </div>
-        </div>
-      </div>
+    <nav class="nav-links" aria-label="Primary"><a href="/" aria-current="page">Home</a><a href="about">About</a><a href="services">Services</a><a href="industries">Industries</a><a href="work">Our Work</a><a href="careers">Careers</a><a href="blog">Blog</a><a href="contact">Contact</a></nav>
+    <div class="nav-actions">
+      <a class="btn btn-primary btn-sm" href="contact">Let&rsquo;s Talk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu"><span></span></button>
     </div>
   </div>
-</section>
-
-<!-- Stats bar -->
-<div class="hero-stats">
-  <div class="stat-item">
-    <div class="stat-n"><span class="counter" data-target="120">0</span><span class="u">+</span></div>
-    <div class="stat-l">Projects Delivered</div>
+  <div class="mobile-nav" id="mobile-nav">
+    <nav aria-label="Mobile"><a href="/" aria-current="page">Home</a><a href="about">About</a><a href="services">Services</a><a href="industries">Industries</a><a href="work">Our Work</a><a href="careers">Careers</a><a href="blog">Blog</a><a href="contact">Contact</a></nav>
+    <a class="btn btn-primary btn-block" href="contact">Let&rsquo;s Talk</a>
   </div>
-  <div class="stat-item">
-    <div class="stat-n"><span class="counter" data-target="8">0</span><span class="u">+</span></div>
-    <div class="stat-l">Years of Experience</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-n"><span class="counter" data-target="50">0</span><span class="u">+</span></div>
-    <div class="stat-l">Enterprise Clients</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-n"><span class="counter" data-target="15">0</span><span class="u">+</span></div>
-    <div class="stat-l">Countries Served</div>
-  </div>
-</div>
+</header>
 
-<!-- Marquee -->
-<div class="marquee-band">
-  <div class="marquee-track anim">
-    <span class="mq-item"><span class="mq-dot"></span>Software Engineering</span>
-    <span class="mq-item"><span class="mq-dot"></span>Game Development</span>
-    <span class="mq-item"><span class="mq-dot"></span>Mobile Applications</span>
-    <span class="mq-item"><span class="mq-dot"></span>AI Implementation</span>
-    <span class="mq-item"><span class="mq-dot"></span>Cloud Architecture</span>
-    <span class="mq-item"><span class="mq-dot"></span>Product Development</span>
-    <span class="mq-item"><span class="mq-dot"></span>Tech Staffing</span>
-    <span class="mq-item"><span class="mq-dot"></span>R&amp;D Innovation</span>
-    <span class="mq-item"><span class="mq-dot"></span>Software Engineering</span>
-    <span class="mq-item"><span class="mq-dot"></span>Game Development</span>
-    <span class="mq-item"><span class="mq-dot"></span>Mobile Applications</span>
-    <span class="mq-item"><span class="mq-dot"></span>AI Implementation</span>
-    <span class="mq-item"><span class="mq-dot"></span>Cloud Architecture</span>
-    <span class="mq-item"><span class="mq-dot"></span>Product Development</span>
-    <span class="mq-item"><span class="mq-dot"></span>Tech Staffing</span>
-    <span class="mq-item"><span class="mq-dot"></span>R&amp;D Innovation</span>
-  </div>
-</div>
-
-<!-- ═══════════════ SERVICES ═══════════════ -->
-<section id="services">
-  <div class="container">
-    <div class="services-head reveal">
-      <div>
-        <div class="sec-eyebrow"><span></span>What We Do</div>
-        <h2 class="sec-title">Capabilities Built<br>for the Long Game</h2>
-      </div>
-      <p class="sec-sub">From concept to deployment, we cover every layer of the technology stack — so you never need another vendor.</p>
-    </div>
-    <div class="services-grid reveal">
-
-      <div class="svc-card">
-        <svg class="svc-icon" viewBox="0 0 44 44" fill="none" stroke="#00C8A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="14,16 8,22 14,28"/><polyline points="30,16 36,22 30,28"/>
-          <line x1="20" y1="10" x2="24" y2="34"/>
-        </svg>
-        <div class="svc-name">Software Development</div>
-        <div class="svc-desc">Full-cycle engineering — from architecture to delivery. Web, desktop, and backend systems built for scale and maintainability.</div>
-      </div>
-
-      <div class="svc-card amber">
-        <svg class="svc-icon" viewBox="0 0 44 44" fill="none" stroke="#E8A020" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="8" y="10" width="28" height="20" rx="2"/>
-          <path d="M18 30v4M26 30v4M14 34h16"/>
-          <circle cx="22" cy="20" r="5"/><path d="M19 20l2 2 4-4"/>
-        </svg>
-        <div class="svc-name">Game Development</div>
-        <div class="svc-desc">Immersive 2D and 3D experiences across PC, console, and mobile. From hyper-casual to competitive multiplayer titles.</div>
-      </div>
-
-      <div class="svc-card">
-        <svg class="svc-icon" viewBox="0 0 44 44" fill="none" stroke="#00C8A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="14" y="6" width="16" height="28" rx="3"/>
-          <line x1="19" y1="10" x2="25" y2="10"/><circle cx="22" cy="28" r="2"/>
-        </svg>
-        <div class="svc-name">Mobile App Development</div>
-        <div class="svc-desc">Native iOS and Android apps, plus cross-platform solutions. Performance-first engineering with polished, intuitive UX.</div>
-      </div>
-
-      <div class="svc-card purple">
-        <svg class="svc-icon" viewBox="0 0 44 44" fill="none" stroke="#9B7FEA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 8l-12 6v12l12 6 12-6V14z"/>
-          <polyline points="10,14 22,20 34,14"/>
-          <line x1="22" y1="20" x2="22" y2="32"/>
-        </svg>
-        <div class="svc-name">Product Development</div>
-        <div class="svc-desc">End-to-end product strategy, design, and engineering. We take your idea from whiteboard to market-ready product.</div>
-      </div>
-
-      <div class="svc-card">
-        <svg class="svc-icon" viewBox="0 0 44 44" fill="none" stroke="#00C8A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="22" cy="22" r="4"/>
-          <path d="M22 10v4M22 30v4M10 22h4M30 22h4"/>
-          <path d="M14.1 14.1l2.8 2.8M27.1 27.1l2.8 2.8M14.1 29.9l2.8-2.8M27.1 16.9l2.8-2.8"/>
-          <circle cx="22" cy="22" r="12" stroke-opacity="0.3"/>
-        </svg>
-        <div class="svc-name">AI Implementation</div>
-        <div class="svc-desc">LLM integration, computer vision, predictive analytics, and custom ML pipelines embedded into real-world workflows.</div>
-      </div>
-
-      <div class="svc-card amber">
-        <svg class="svc-icon" viewBox="0 0 44 44" fill="none" stroke="#E8A020" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 30 Q22 18 36 30"/><path d="M12 34 Q22 24 32 34"/><path d="M16 38 Q22 30 28 38"/>
-          <circle cx="22" cy="14" r="4"/>
-        </svg>
-        <div class="svc-name">Cloud Services</div>
-        <div class="svc-desc">Multi-cloud strategy, migration, DevOps, and managed infrastructure on AWS, GCP, and Azure — optimized for cost and reliability.</div>
-      </div>
-
-      <div class="svc-card purple">
-        <svg class="svc-icon" viewBox="0 0 44 44" fill="none" stroke="#9B7FEA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="16" cy="14" r="4"/><circle cx="28" cy="14" r="4"/>
-          <circle cx="22" cy="30" r="4"/>
-          <path d="M16 18 Q16 30 22 30"/><path d="M28 18 Q28 30 22 30"/>
-        </svg>
-        <div class="svc-name">Staffing &amp; Resources</div>
-        <div class="svc-desc">Top-tier vetted engineers, architects, and PMs on demand. Embed specialists in your team or scale entire squads.</div>
-      </div>
-
-      <div class="svc-card">
-        <svg class="svc-icon" viewBox="0 0 44 44" fill="none" stroke="#00C8A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 8 Q30 12 30 22 Q30 32 22 36 Q14 32 14 22 Q14 12 22 8Z"/>
-          <line x1="22" y1="15" x2="22" y2="22"/>
-          <circle cx="22" cy="25" r="1.5" fill="#00C8A8"/>
-        </svg>
-        <div class="svc-name">Research &amp; Development</div>
-        <div class="svc-desc">Applied R&amp;D in emerging tech — edge computing, spatial interfaces, generative AI tooling, and next-gen architectures.</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ PRODUCTS ═══════════════ -->
-<section id="products" class="products-section">
-  <div class="container">
-    <div class="products-head reveal">
-      <div>
-        <div class="sec-eyebrow"><span></span>Our Portfolio</div>
-        <h2 class="sec-title">Products We've<br>Shipped</h2>
-      </div>
-      <p class="sec-sub" style="max-width:380px">From chart-topping games to enterprise-grade financial tools — built by us, used by thousands.</p>
-    </div>
-    <div class="products-grid reveal">
-
-      <div class="prod-card feat">
-        <span class="prod-tag tag-flagship">Flagship App</span>
-        <div class="prod-name">JiVault</div>
-        <p class="prod-desc">A professional-grade personal finance and secure document vault application. JiVault gives individuals and businesses a single encrypted hub for sensitive financial data, contracts, and identity documents — with zero-knowledge architecture and enterprise-level access controls.</p>
-        <a href="products.html" class="prod-link">Learn More
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <div class="prod-visual">
-          <canvas class="pv-canvas" id="cv-jivault"></canvas>
-        </div>
-      </div>
-
-      <div class="prod-card">
-        <span class="prod-tag tag-web">Interview Platform</span>
-        <div class="prod-name">JiQuest</div>
-        <p class="prod-desc">An AI-powered interview preparation platform with curated question banks, mock sessions, and real-time performance analytics. Trusted by candidates targeting top-tier tech roles.</p>
-        <a href="https://www.jiquest.com/" class="prod-link" target="_blank" rel="noopener noreferrer">Explore
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <div class="prod-visual">
-          <canvas class="pv-canvas" id="cv-jiquest"></canvas>
-        </div>
-      </div>
-
-      <div class="prod-card">
-        <span class="prod-tag tag-game">Mobile Game</span>
-        <div class="prod-name">Kitty Gaming</div>
-        <p class="prod-desc">A vibrant, physics-driven mobile title with fast-paced action gameplay, an addictive progression loop, and global leaderboards across iOS and Android.</p>
-        <a href="https://play.google.com/store/apps/details?id=com.kittygaming.kitty_gaming" class="prod-link" target="_blank" rel="noopener noreferrer">View Game
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-
-      <div class="prod-card">
-        <span class="prod-tag tag-game">Strategy Game</span>
-        <div class="prod-name">Battle Brain</div>
-        <p class="prod-desc">A competitive real-time strategy game blending quick thinking with tactical depth. Ranked multiplayer, seasonal events, and a growing esports community.</p>
-        <a href="https://play.google.com/store/apps/details?id=com.brainbattle.brain_battle" class="prod-link" target="_blank" rel="noopener noreferrer">View Game
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-
-      <div class="prod-card" style="grid-column: 2 / 4;">
-        <span class="prod-tag tag-game">Arcade Game</span>
-        <div class="prod-name">Arkade</div>
-        <p class="prod-desc">A modern arcade experience that captures the energy of classic gaming with contemporary production quality. Multiple game modes, unlockable content, and collaborative co-op mechanics.</p>
-        <a href="https://play.google.com/store/apps/details?id=com.myappscart.gamevault" class="prod-link" target="_blank" rel="noopener noreferrer">View Game
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ REVIEWS ═══════════════ -->
-<section class="reviews-section">
-  <div class="container">
-    <div class="reviews-head reveal">
-      <div>
-        <div class="sec-eyebrow"><span></span>Customer Reviews</div>
-        <h2 class="sec-title">Happy users and client teams</h2>
-      </div>
-      <p class="sec-sub">Feedback from people using Kirosys-built products and teams that trusted us with critical software delivery.</p>
-    </div>
-    <div class="reviews-grid reveal">
-      <article class="review-card">
-        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="review-quote">"JiQuest made interview practice feel structured instead of stressful. The mock sessions and progress feedback helped me focus on the exact areas I needed to improve."</p>
-        <div class="review-author">Aarav Mehta, Software Engineer</div>
-        <div class="review-product">JiQuest</div>
-      </article>
-      <article class="review-card">
-        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="review-quote">"The team delivered a clean, fast, and secure product experience. Communication was direct, timelines were realistic, and every release felt carefully tested."</p>
-        <div class="review-author">Priya Sharma, Product Founder</div>
-        <div class="review-product">Product Engineering</div>
-      </article>
-      <article class="review-card">
-        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="review-quote">"Kitty Gaming is simple to start and surprisingly addictive. The controls feel smooth, the levels are fun, and the game keeps giving you a reason to come back."</p>
-        <div class="review-author">Nisha Verma, Mobile Player</div>
-        <div class="review-product">Kitty Gaming</div>
-      </article>
-      <article class="review-card">
-        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="review-quote">"Battle Brain has the kind of quick decision-making loop I like. It is competitive, polished, and easy to recommend to friends who enjoy strategy games."</p>
-        <div class="review-author">Rohan Sinha, Strategy Gamer</div>
-        <div class="review-product">Battle Brain</div>
-      </article>
-      <article class="review-card">
-        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="review-quote">"Our cloud migration was handled with a lot of discipline. Kirosys reduced deployment friction, improved monitoring, and gave us a setup our internal team can actually own."</p>
-        <div class="review-author">Siddharth Rao, CTO</div>
-        <div class="review-product">Cloud Services</div>
-      </article>
-      <article class="review-card">
-        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="review-quote">"The finance and document workflow felt thoughtfully designed. It gave our team one place to organize sensitive records without making the experience complicated."</p>
-        <div class="review-author">Ananya Iyer, Operations Lead</div>
-        <div class="review-product">JiVault</div>
-      </article>
-      <article class="review-card">
-        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="review-quote">"GameVault has a clean experience and the performance feels solid on mobile. The app is easy to navigate, responsive, and built with good attention to detail."</p>
-        <div class="review-author">Karan Malhotra, App User</div>
-        <div class="review-product">GameVault</div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ CLOUD ═══════════════ -->
-<section id="cloud" class="cloud-bg">
-  <div class="cloud-glow"></div>
-  <div class="container">
-    <div class="cloud-head reveal">
-      <div>
-        <div class="sec-eyebrow"><span></span>Cloud Services</div>
-        <h2 class="sec-title">Multi-Cloud<br>Expertise</h2>
-      </div>
-      <p class="sec-sub">We architect, migrate, and manage cloud infrastructure at scale — partnering with all three major platforms so you're never locked in.</p>
-    </div>
-    <div class="cloud-grid reveal">
-
-      <div class="cloud-card">
-        <div class="cloud-pname aws">AWS</div>
-        <div class="cloud-pfull">Amazon Web Services</div>
-        <p class="cloud-desc">Deep specialization in AWS compute, storage, and serverless. We design resilient multi-region architectures and optimize for performance at any scale.</p>
-        <div class="cloud-chips">
-          <span class="chip">EC2 &amp; EKS</span><span class="chip">Lambda</span><span class="chip">S3 &amp; CloudFront</span>
-          <span class="chip">RDS / Aurora</span><span class="chip">SageMaker</span><span class="chip">IAM</span><span class="chip">CloudFormation</span>
-        </div>
-      </div>
-
-      <div class="cloud-card">
-        <div class="cloud-pname gcp">GCP</div>
-        <div class="cloud-pfull">Google Cloud Platform</div>
-        <p class="cloud-desc">Leveraging Google's data and AI infrastructure for analytics-heavy and ML-native workloads. Kubernetes-native deployments with BigQuery at the core.</p>
-        <div class="cloud-chips">
-          <span class="chip">GKE</span><span class="chip">BigQuery</span><span class="chip">Cloud Run</span>
-          <span class="chip">Vertex AI</span><span class="chip">Firestore</span><span class="chip">Pub/Sub</span><span class="chip">Dataflow</span>
-        </div>
-      </div>
-
-      <div class="cloud-card">
-        <div class="cloud-pname azure">Azure</div>
-        <div class="cloud-pfull">Microsoft Azure</div>
-        <p class="cloud-desc">Enterprise-grade deployments on Azure with seamless Microsoft ecosystem integration. Preferred partner for organizations running on the Microsoft stack.</p>
-        <div class="cloud-chips">
-          <span class="chip">AKS</span><span class="chip">Azure DevOps</span><span class="chip">Cosmos DB</span>
-          <span class="chip">Azure OpenAI</span><span class="chip">App Service</span><span class="chip">Azure AD</span><span class="chip">Logic Apps</span>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="process-strip reveal">
-      <div class="process-step">
-        <div class="step-n">Step 01</div>
-        <div class="step-title">Discovery &amp; Audit</div>
-        <div class="step-desc">We assess your existing infrastructure, costs, security posture, and workload characteristics.</div>
-      </div>
-      <div class="process-step">
-        <div class="step-n">Step 02</div>
-        <div class="step-title">Architecture Design</div>
-        <div class="step-desc">Our architects produce a tailored blueprint — resilience, compliance, and cost-efficiency baked in from day one.</div>
-      </div>
-      <div class="process-step">
-        <div class="step-n">Step 03</div>
-        <div class="step-title">Migration &amp; Build</div>
-        <div class="step-desc">Zero-downtime migrations and infrastructure-as-code delivery using Terraform, Pulumi, or CDK.</div>
-      </div>
-      <div class="process-step">
-        <div class="step-n">Step 04</div>
-        <div class="step-title">Managed Operations</div>
-        <div class="step-desc">24/7 monitoring, incident response, FinOps dashboards, and continuous optimization as a managed service.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ TECH STACK ═══════════════ -->
-<section class="stack-section">
-  <div class="container">
+<main id="main">
+<section class="hero on-dark">
+  <div class="container hero-inner">
     <div class="reveal">
-      <div class="sec-eyebrow"><span></span>Technologies</div>
-      <h2 class="sec-title" style="margin-bottom:0.75rem">The Stack Behind<br>the Work</h2>
+      <p class="eyebrow">Engineering Better Possibilities</p>
+      <h1>Technology<br>for a Smarter,<br><span class="grad">More Connected Tomorrow</span></h1>
+      <p class="hero-lead">We design, develop and deliver digital solutions that help businesses
+        innovate, operate efficiently and create lasting impact.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="contact">Get in Touch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a class="btn btn-outline" href="services">Explore Our Services</a>
+      </div>
+      <div class="hero-points"><span class="hero-point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>Innovative Solutions</span></span><span class="hero-point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Trusted Partnership</span></span><span class="hero-point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg><span>Quality Delivery</span></span><span class="hero-point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg><span>Long-term Value</span></span></div>
     </div>
-    <div class="stack-grid reveal reveal-d1">
-      <span class="stack-pill">React</span><span class="stack-pill">Next.js</span><span class="stack-pill">Vue.js</span>
-      <span class="stack-pill">Node.js</span><span class="stack-pill">Python</span><span class="stack-pill">Go</span>
-      <span class="stack-pill">Rust</span><span class="stack-pill">Swift</span><span class="stack-pill">Kotlin</span>
-      <span class="stack-pill">Flutter</span><span class="stack-pill">React Native</span><span class="stack-pill">Unity</span>
-      <span class="stack-pill">Unreal Engine</span><span class="stack-pill">Godot</span><span class="stack-pill">TensorFlow</span>
-      <span class="stack-pill">PyTorch</span><span class="stack-pill">OpenAI API</span><span class="stack-pill">LangChain</span>
-      <span class="stack-pill">Docker</span><span class="stack-pill">Kubernetes</span><span class="stack-pill">Terraform</span>
-      <span class="stack-pill">PostgreSQL</span><span class="stack-pill">MongoDB</span><span class="stack-pill">Redis</span>
-      <span class="stack-pill">GraphQL</span><span class="stack-pill">gRPC</span><span class="stack-pill">Kafka</span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ ABOUT ═══════════════ -->
-<section id="about" class="about-section">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-img-wrap reveal">
-        <canvas class="about-canvas" id="about-canvas"></canvas>
-        <div class="about-badge">
-          <div class="badge-n">2016</div>
-          <div class="badge-l">Founded — Building since day one</div>
+    <div class="hero-visual reveal" data-delay="2">
+      <p class="hero-words" aria-hidden="true"><span>Ideas</span><span>Technology</span><span>People</span><span>Impact</span></p>
+      <div class="hero-console">
+        <div class="console-bar"><span class="console-dot"></span><span class="console-dot"></span><span class="console-dot"></span><span class="console-title">kirosys / delivery</span></div>
+        <div class="console-body" aria-hidden="true">
+          <div class="code-line"><span class="code-num">1</span><span><span class="c-key">service</span> <span class="c-fn">kirosys</span> {</span></div>
+          <div class="code-line"><span class="code-num">2</span><span>&nbsp;&nbsp;<span class="c-key">build</span>: <span class="c-str">"web, mobile, cloud"</span>,</span></div>
+          <div class="code-line"><span class="code-num">3</span><span>&nbsp;&nbsp;<span class="c-key">secure</span>: <span class="c-val">true</span>,</span></div>
+          <div class="code-line"><span class="code-num">4</span><span>&nbsp;&nbsp;<span class="c-key">scale</span>: <span class="c-str">"future-ready"</span>,</span></div>
+          <div class="code-line"><span class="code-num">5</span><span>&nbsp;&nbsp;<span class="c-com">// from idea to impact</span></span></div>
+          <div class="code-line"><span class="code-num">6</span><span>}</span></div>
+        </div>
+        <div class="console-foot" aria-hidden="true">
+          <span class="chip">Discover</span><span class="chip">Plan</span><span class="chip">Build</span><span class="chip">Deliver</span>
         </div>
       </div>
-      <div class="about-content reveal reveal-d2">
-        <div class="sec-eyebrow"><span></span>About Kirosys</div>
-        <h2 class="sec-title">Technology as a<br>Strategic Asset</h2>
-        <p class="about-body">
-          Kirosys was founded with a single conviction: that the best software comes from engineers who care deeply about the craft. Over eight years, we've grown from a small product studio into a full-spectrum technology company trusted by enterprises, scale-ups, and founders who want more than execution — they want a thinking partner.
-        </p>
-        <div class="pillars">
-          <div class="pillar">
-            <div class="pillar-bar"></div>
-            <div>
-              <div class="pillar-title">Engineering First</div>
-              <div class="pillar-desc">We don't sell hours — we sell outcomes. Every project is staffed with senior engineers who own the problem end to end.</div>
-            </div>
-          </div>
-          <div class="pillar amber">
-            <div class="pillar-bar"></div>
-            <div>
-              <div class="pillar-title">Radically Transparent</div>
-              <div class="pillar-desc">No account managers between you and the team. Direct communication, real status, and honest timelines from day one.</div>
-            </div>
-          </div>
-          <div class="pillar purple">
-            <div class="pillar-bar"></div>
-            <div>
-              <div class="pillar-title">Future-Oriented</div>
-              <div class="pillar-desc">We invest in R&amp;D so the systems we build today are ready for the demands of tomorrow — not just the requirements of this sprint.</div>
-            </div>
-          </div>
-        </div>
+      <div class="hero-float">
+        <span class="bar" aria-hidden="true"></span>
+        <strong>Turning Ideas into Real-World Solutions</strong>
+        <span>Software &middot; Cloud &middot; AI &middot; Support</span>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ═══════════════ CONTACT ═══════════════ -->
-<section id="contact">
+<section class="section section--tight">
   <div class="container">
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <div class="sec-eyebrow"><span></span>Get In Touch</div>
-        <h2 class="sec-title">Let's Build<br>Something Real</h2>
-        <p class="contact-body">
-          Whether you have a project in mind, a problem to solve, or just want to explore what's possible — our team is ready to talk.
-        </p>
-        <div class="contact-items">
-          <div class="contact-item">
-            <div class="ci-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 4h16v12H2z"/><path d="M2 4l8 7 8-7"/>
-              </svg>
-            </div>
-            <div>
-              <div class="ci-label">Email</div>
-              <div class="ci-val">support@kirosys.in</div>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="ci-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h5l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v5a1 1 0 0 1-1 1C9 20 0 11 0 4a1 1 0 0 1 1-1h3z"/>
-              </svg>
-            </div>
-            <div>
-              <div class="ci-label">Phone</div>
-              <div class="ci-val">+91 82988 66066</div>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="ci-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="10" cy="8" r="3"/><path d="M10 1C6.13 1 3 4.13 3 8c0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7z"/>
-              </svg>
-            </div>
-            <div>
-              <div class="ci-label">Address</div>
-              <div class="ci-val">New Dariyapur Colony, Suryamandir<br>Khairatali, Patna – 804453, Bihar</div>
-            </div>
-          </div>
-        </div>
+    <div class="stats reveal"><div class="stat"><span class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></span><div>
+  <div class="stat-num"><span data-count="50" data-suffix="+">50+</span></div>
+  <div class="stat-label">Projects Delivered</div></div></div><div class="stat"><span class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div>
+  <div class="stat-num"><span data-count="30" data-suffix="+">30+</span></div>
+  <div class="stat-label">Happy Clients</div></div></div><div class="stat"><span class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16v-5"/><path d="M12 16V8"/><path d="M17 16v-3"/></svg></span><div>
+  <div class="stat-num"><span data-count="5" data-suffix="+">5+</span></div>
+  <div class="stat-label">Industries Served</div></div></div><div class="stat"><span class="stat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="m15.48 12.89 1.51 8.53a.5.5 0 0 1-.81.47l-3.58-2.69a1 1 0 0 0-1.2 0l-3.58 2.69a.5.5 0 0 1-.81-.47l1.51-8.53"/></svg></span><div>
+  <div class="stat-num"><span data-count="100" data-suffix="%">100%</span></div>
+  <div class="stat-label">Commitment to Quality</div></div></div></div>
+  </div>
+</section>
+<section class="section">
+  <div class="container split split--wide-left">
+    <div class="reveal">
+      <p class="eyebrow">About Kirosys</p>
+      <h2>Building Technology for a Better Tomorrow</h2>
+      <p class="lead">Kirosys Technologies is a software development and IT services company focused on
+        creating scalable, secure and future-ready digital solutions. We combine domain expertise with
+        modern technology to help businesses, organisations and government entities solve real problems
+        and unlock new opportunities.</p>
+      <div class="feature-row"><span class="feature-mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Client Centric Approach</span></span><span class="feature-mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg><span>Agile &amp; Flexible</span></span><span class="feature-mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>Innovation Driven</span></span><span class="feature-mini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg><span>Reliable Support</span></span></div>
+      <div class="hero-actions"><a class="btn btn-primary" href="about">More About Us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
+    </div>
+    <div class="showcase reveal" data-delay="2">
+      <div class="showcase-panel">
+        <img class="mark" src="assets/img/mark-256.png" alt="" width="56" height="56" loading="lazy">
+        <h3>One partner across the full stack</h3>
+        <p>From the first workshop to long-term support, the same team stays with your product.</p>
+        <ul class="showcase-list"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Software &amp; Web Solutions</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Mobile Applications</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Cloud &amp; DevOps</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>IT Consulting &amp; Support</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Government &amp; Enterprise Solutions</span></li></ul>
       </div>
-
-      <form class="contact-form reveal reveal-d2" action="https://formsubmit.co/support@kirosys.in" method="POST">
-        <input type="hidden" name="_subject" value="New Kirosys website inquiry">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://kirosys.in/thanks.html">
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="form-honey">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="fname">First Name</label>
-            <input class="form-input" type="text" id="fname" name="first_name" placeholder="Jane" autocomplete="given-name" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="lname">Last Name</label>
-            <input class="form-input" type="text" id="lname" name="last_name" placeholder="Smith" autocomplete="family-name" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="email">Work Email</label>
-          <input class="form-input" type="email" id="email" name="email" placeholder="jane@company.com" autocomplete="email" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="service">Service of Interest</label>
-          <select class="form-select" id="service" name="service" required>
-            <option value="">Select a service...</option>
-            <option>Software Development</option>
-            <option>Game Development</option>
-            <option>Mobile App Development</option>
-            <option>AI Implementation</option>
-            <option>Cloud Services</option>
-            <option>Product Development</option>
-            <option>Staffing &amp; Resources</option>
-            <option>R&amp;D Partnership</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="message">Tell Us About Your Project</label>
-          <textarea class="form-textarea" id="message" name="message" placeholder="Brief overview, timeline, or key questions..." required></textarea>
-        </div>
-        <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Send Message
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </form>
+      <figure class="quote-card">
+        <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+        <p>We believe in using technology as a force for good &mdash; empowering businesses and people to achieve more.</p>
+        <cite>&mdash; Kirosys Technologies</cite>
+      </figure>
+    </div>
+  </div>
+</section>
+<section class="section section--tint">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div class="reveal">
+        <p class="eyebrow">Our Services</p>
+        <h2>End-to-End Technology Solutions</h2>
+        <p class="lead">From idea to execution, we deliver solutions that create real business value.</p>
+      </div>
+      <a class="link-more reveal" href="services">View All Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    </div>
+    <div class="grid grid-6"><a class="card reveal" data-delay="0" href="services#custom-software">
+  <span class="card-ico "><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg></span>
+  <h3>Custom Software Development</h3>
+  <p>Tailored software solutions for your unique business needs.</p>
+  <span class="card-go">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a>
+<a class="card reveal" data-delay="1" href="services#mobile-apps">
+  <span class="card-ico violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg></span>
+  <h3>Mobile App Development</h3>
+  <p>High-performance apps for iOS and Android.</p>
+  <span class="card-go">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a>
+<a class="card reveal" data-delay="2" href="services#cloud-devops">
+  <span class="card-ico cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9"/></svg></span>
+  <h3>Cloud &amp; DevOps</h3>
+  <p>Scalable, secure and cost-efficient cloud solutions.</p>
+  <span class="card-go">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a>
+<a class="card reveal" data-delay="3" href="services#ai-data">
+  <span class="card-ico amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></span>
+  <h3>AI &amp; Data Solutions</h3>
+  <p>Turning data into smarter decisions.</p>
+  <span class="card-go">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a>
+<a class="card reveal" data-delay="4" href="services#it-consulting">
+  <span class="card-ico rose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14h3a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M18 14h3v5a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/><path d="M3 14a9 9 0 0 1 18 0"/><path d="M21 19v1a3 3 0 0 1-3 3h-3"/></svg></span>
+  <h3>IT Consulting &amp; Support</h3>
+  <p>Expert guidance and ongoing support.</p>
+  <span class="card-go">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a>
+<a class="card reveal" data-delay="5" href="services#web-portals">
+  <span class="card-ico green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
+  <h3>Web &amp; Portal Development</h3>
+  <p>Modern, secure and user-friendly web solutions.</p>
+  <span class="card-go">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a></div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div class="reveal">
+        <p class="eyebrow">Industries We Serve</p>
+        <h2>Powering Progress Across Industries</h2>
+        <p class="lead">Sector context shapes every decision &mdash; from data design to the way people use what we ship.</p>
+      </div>
+      <a class="link-more reveal" href="industries">View All Industries <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    </div>
+    <div class="grid grid-6"><a class="tile reveal" data-delay="0" style="--t1:#0A3EA8;--t2:#041A33" href="industries#healthcare">
+  <span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg></span>
+  <span class="tile-name">Healthcare <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a>
+<a class="tile reveal" data-delay="1" style="--t1:#00348F;--t2:#031428" href="industries#fintech">
+  <span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg></span>
+  <span class="tile-name">FinTech <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a>
+<a class="tile reveal" data-delay="2" style="--t1:#0B4BB8;--t2:#04182F" href="industries#education">
+  <span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6"/><path d="m2 10 10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+  <span class="tile-name">Education <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a>
+<a class="tile reveal" data-delay="3" style="--t1:#063C9E;--t2:#02122A" href="industries#ecommerce">
+  <span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2 2h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>
+  <span class="tile-name">E-Commerce <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a>
+<a class="tile reveal" data-delay="4" style="--t1:#0A3EA8;--t2:#020D1C" href="industries#government">
+  <span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 18v-7"/><path d="M11.12 2.2a2 2 0 0 1 1.76 0l7.87 3.85c.47.23.31.95-.22.95H3.47c-.53 0-.69-.72-.22-.95z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></svg></span>
+  <span class="tile-name">Government <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a>
+<a class="tile reveal" data-delay="5" style="--t1:#004AC6;--t2:#03152C" href="industries#logistics">
+  <span class="tile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></span>
+  <span class="tile-name">Logistics <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+</a></div>
+  </div>
+</section>
+<section class="section section--tint">
+  <div class="container"><div class="process">
+  <div class="process-intro reveal">
+    <p class="eyebrow">Our process</p>
+    <h2>A Clear Path from Vision to Value</h2>
+    <p>We follow a structured, collaborative approach so delivery stays predictable &mdash; every time.</p>
+    <a class="btn btn-primary" href="contact">Let&rsquo;s Work Together <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+  </div>
+  <div class="steps"><article class="step reveal" data-delay="0">
+  <span class="step-num">01</span>
+  <svg class="step-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+  <h3>Discover</h3>
+  <p>Understand your goals, users, constraints and the systems already in place.</p>
+</article><article class="step reveal" data-delay="1">
+  <span class="step-num">02</span>
+  <svg class="step-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+  <h3>Plan</h3>
+  <p>Agree a clear roadmap, architecture, milestones and success criteria.</p>
+</article><article class="step reveal" data-delay="2">
+  <span class="step-num">03</span>
+  <svg class="step-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg>
+  <h3>Build</h3>
+  <p>Develop, test and iterate in short cycles with visible progress throughout.</p>
+</article><article class="step reveal" data-delay="3">
+  <span class="step-num">04</span>
+  <svg class="step-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91 0z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+  <h3>Deliver</h3>
+  <p>Deploy, hand over and support the product for long-term success.</p>
+</article></div>
+</div></div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div class="reveal">
+        <p class="eyebrow">Featured Work</p>
+        <h2>Real Solutions. Real Impact.</h2>
+        <p class="lead">Products we have designed, built and shipped &mdash; and continue to support.</p>
+      </div>
+      <a class="link-more reveal" href="work">View All Projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    </div>
+    <div class="grid grid-4"><a class="work-card reveal" data-delay="0" href="work#jivault">
+  <div class="work-visual"><span class="work-tag">FinTech</span><div class="mini-ui" aria-hidden="true"><div class="mini-bar"><i></i><i></i><i></i></div><div class="mini-body"><div class="mini-side"><i></i><i></i><i></i><i></i></div><div class="mini-main"><div class="mini-kpis"><i></i><i></i><i></i></div><div class="mini-chart"><i style="height:38%"></i><i style="height:62%"></i><i style="height:46%"></i><i style="height:78%"></i><i style="height:58%"></i><i style="height:88%"></i></div></div></div></div></div>
+  <div class="work-meta">
+    <div><h3>JiVault</h3><span>Secure Finance &amp; Document Vault</span></div>
+    <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+  </div>
+</a>
+<a class="work-card reveal" data-delay="1" href="https://www.jiquest.com/" target="_blank" rel="noopener">
+  <div class="work-visual"><span class="work-tag">EdTech</span><div class="mini-ui" aria-hidden="true"><div class="mini-bar"><i></i><i></i><i></i></div><div class="mini-body"><div class="mini-side"><i></i><i></i><i></i><i></i></div><div class="mini-main"><div class="mini-kpis"><i></i><i></i><i></i></div><div class="mini-chart"><i style="height:72%"></i><i style="height:44%"></i><i style="height:86%"></i><i style="height:52%"></i><i style="height:68%"></i><i style="height:40%"></i></div></div></div></div></div>
+  <div class="work-meta">
+    <div><h3>JiQuest</h3><span>Interview Preparation Platform</span></div>
+    <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+  </div>
+</a>
+<a class="work-card reveal" data-delay="2" href="https://play.google.com/store/apps/details?id=com.kittygaming.kitty_gaming" target="_blank" rel="noopener">
+  <div class="work-visual"><span class="work-tag">Mobile Game</span><div class="mini-phone" aria-hidden="true"><div class="mini-hd"></div><div class="mini-rows"><i></i><i></i><i></i><i></i><i></i></div></div></div>
+  <div class="work-meta">
+    <div><h3>Kitty Gaming</h3><span>Physics-Driven Mobile Game</span></div>
+    <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+  </div>
+</a>
+<a class="work-card reveal" data-delay="3" href="https://play.google.com/store/apps/details?id=com.brainbattle.brain_battle" target="_blank" rel="noopener">
+  <div class="work-visual"><span class="work-tag">Strategy</span><div class="mini-phone" aria-hidden="true"><div class="mini-hd"></div><div class="mini-rows"><i></i><i></i><i></i><i></i><i></i></div></div></div>
+  <div class="work-meta">
+    <div><h3>Battle Brain</h3><span>Real-Time Strategy Game</span></div>
+    <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+  </div>
+</a></div>
+  </div>
+</section>
+<section class="section section--tint">
+  <div class="container"><div class="testimonials" data-carousel>
+  <div class="reveal">
+    <p class="eyebrow">Testimonials</p>
+    <h2>What Our Clients Say</h2>
+    <p class="lead">Feedback from client teams and users across product, cloud and game engagements.</p>
+    <div class="t-controls">
+      <button class="t-btn" type="button" data-prev aria-label="Previous testimonial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="t-btn" type="button" data-next aria-label="Next testimonial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="t-viewport"><figure class="t-slide is-active" aria-hidden="false">
+  <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+  <div>
+    <blockquote>Kirosys delivered a clean, fast and secure product experience. Communication was direct, timelines were realistic, and every release felt carefully tested.</blockquote>
+    <cite><b>Priya Sharma</b><span>Product Founder &middot; Product Engineering</span></cite>
+  </div>
+</figure><figure class="t-slide" aria-hidden="true">
+  <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+  <div>
+    <blockquote>Our cloud migration was handled with a lot of discipline. Kirosys reduced deployment friction, improved monitoring, and gave us a setup our internal team can actually own.</blockquote>
+    <cite><b>Siddharth Rao</b><span>CTO &middot; Cloud Services</span></cite>
+  </div>
+</figure><figure class="t-slide" aria-hidden="true">
+  <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+  <div>
+    <blockquote>JiQuest made interview practice feel structured instead of stressful. The mock sessions and progress feedback helped me focus on the exact areas I needed to improve.</blockquote>
+    <cite><b>Aarav Mehta</b><span>Software Engineer &middot; JiQuest</span></cite>
+  </div>
+</figure><figure class="t-slide" aria-hidden="true">
+  <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+  <div>
+    <blockquote>The finance and document workflow felt thoughtfully designed. It gave our team one place to organise sensitive records without making the experience complicated.</blockquote>
+    <cite><b>Ananya Iyer</b><span>Operations Lead &middot; JiVault</span></cite>
+  </div>
+</figure></div>
+    <div class="t-dots" role="tablist" aria-label="Choose testimonial"><button class="t-dot is-active" type="button" role="tab" aria-selected="true" aria-label="Testimonial 1"></button><button class="t-dot" type="button" role="tab" aria-selected="false" aria-label="Testimonial 2"></button><button class="t-dot" type="button" role="tab" aria-selected="false" aria-label="Testimonial 3"></button><button class="t-dot" type="button" role="tab" aria-selected="false" aria-label="Testimonial 4"></button></div>
+  </div>
+</div></div>
+</section>
+<section class="cta-band on-dark">
+  <div class="container cta-inner reveal">
+    <div>
+      <p class="eyebrow">Let&rsquo;s create what&rsquo;s next</p>
+      <h2>Ready to Build a Smarter Tomorrow?</h2>
+      <p>Partner with Kirosys Technologies and turn your ideas into real-world solutions.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-primary" href="contact">Get in Touch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      <a class="btn btn-outline" href="contact#quote">Request a Quote</a>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ FOOTER ═══════════════ -->
-<footer>
+</main>
+<footer class="site-footer">
   <div class="container">
-    <div class="footer-inner">
-      <span class="footer-copy">&copy; 2026 Kirosys Technologies Pvt. Ltd. All rights reserved.</span>
-      <ul class="footer-links">
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="terms.html">Terms of Service</a></li>
-        <li><a href="careers.html">Careers</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/img/logo-dark-720.png" alt="Kirosys Technologies" width="186" height="47" loading="lazy">
+        <p>Engineering better possibilities through technology, innovation and people.</p>
+        <!-- Social profiles: add the real URLs, then delete these comment markers.
+        <div class="socials">
+          <a href="" aria-label="Kirosys on LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-12h4v1.5A6 6 0 0 1 16 8z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="" aria-label="Kirosys on GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></a>
+          <a href="" aria-label="Kirosys on YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 17a24 24 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49 49 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24 24 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49 49 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></a>
+        </div>
+        -->
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <nav class="footer-links" aria-label="Footer"><a href="about">About</a><a href="services">Services</a><a href="industries">Industries</a><a href="work">Our Work</a><a href="careers">Careers</a><a href="blog">Blog</a><a href="contact">Contact</a></nav>
+      </div>
+      <div>
+        <h4>Our Services</h4>
+        <nav class="footer-links" aria-label="Services"><a href="services#custom-software">Custom Software Development</a><a href="services#mobile-apps">Mobile App Development</a><a href="services#cloud-devops">Cloud &amp; DevOps</a><a href="services#ai-data">AI &amp; Data Solutions</a><a href="services#it-consulting">IT Consulting &amp; Support</a><a href="services#web-portals">Web &amp; Portal Development</a></nav>
+      </div>
+      <div>
+        <h4>Contact Us</h4>
+        <ul class="footer-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg><span>New Dariyapur Colony, Suryamandir, Khairatali,<br>Patna &ndash; 804453, Bihar, India</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><a href="mailto:support@kirosys.in">support@kirosys.in</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+918298866066">+91 82988 66066</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span data-year>2026</span> Kirosys Technologies Private Limited. All rights reserved.</span>
+      <nav aria-label="Legal">
+        <a href="privacy">Privacy Policy</a>
+        <a href="terms">Terms &amp; Conditions</a>
+      </nav>
     </div>
   </div>
 </footer>
 
-<script>
-/* ─── Futuristic interaction polish ─── */
-(function() {
-  const aura = document.querySelector('.cursor-aura');
-  const finePointer = window.matchMedia('(pointer: fine)').matches;
-  if (aura && finePointer) {
-    document.body.classList.add('has-pointer');
-    window.addEventListener('pointermove', e => {
-      document.documentElement.style.setProperty('--mx', e.clientX + 'px');
-      document.documentElement.style.setProperty('--my', e.clientY + 'px');
-    }, { passive: true });
-  }
-
-  const readout = document.getElementById('pipeline-readout');
-  if (readout) {
-    const commands = [
-      '<strong>deploy</strong> --region global --zero-downtime',
-      '<strong>train</strong> --model vision --edge-ready',
-      '<strong>scale</strong> --services api,web,worker',
-      '<strong>secure</strong> --vault encrypted --audit-pass'
-    ];
-    let i = 0;
-    setInterval(() => {
-      i = (i + 1) % commands.length;
-      readout.style.opacity = '0';
-      setTimeout(() => {
-        readout.innerHTML = commands[i];
-        readout.style.opacity = '1';
-      }, 180);
-    }, 2400);
-  }
-
-  document.querySelectorAll('.svc-card, .prod-card, .cloud-card, .process-step, .review-card').forEach(card => {
-    card.addEventListener('pointermove', e => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--card-x', (e.clientX - rect.left) + 'px');
-      card.style.setProperty('--card-y', (e.clientY - rect.top) + 'px');
-    }, { passive: true });
-  });
-})();
-
-/* ─── Mobile nav ─── */
-function closeMobileMenu() {
-  document.getElementById('mobile-menu').classList.remove('open');
-}
-document.getElementById('hamburger').addEventListener('click', function() {
-  document.getElementById('mobile-menu').classList.toggle('open');
-});
-
-/* ─── Nav scroll ─── */
-const nav = document.getElementById('main-nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 20);
-}, { passive: true });
-
-/* ─── Hero canvas — particle network ─── */
-(function() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H;
-  const mouse = { x: -9999, y: -9999 };
-  const PARTICLE_COUNT = 80;
-  const LINK_DIST = 140;
-  const particles = [];
-
-  function resize() {
-    W = canvas.width = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-  }
-
-  function makeParticle() {
-    return {
-      x: Math.random() * W, y: Math.random() * H,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
-      r: Math.random() * 1.5 + 0.5
-    };
-  }
-
-  resize();
-  window.addEventListener('resize', resize);
-  for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(makeParticle());
-
-  canvas.addEventListener('mousemove', e => {
-    const r = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-  });
-  canvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > W) p.vx *= -1;
-      if (p.y < 0 || p.y > H) p.vy *= -1;
-      const dx = p.x - mouse.x, dy = p.y - mouse.y;
-      const md = Math.sqrt(dx*dx + dy*dy);
-      if (md < 80) { p.x += dx/md * 1.5; p.y += dy/md * 1.5; }
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fillStyle = 'rgba(0,200,168,0.55)';
-      ctx.fill();
-      for (let j = i+1; j < particles.length; j++) {
-        const q = particles[j];
-        const ex = p.x - q.x, ey = p.y - q.y;
-        const d = Math.sqrt(ex*ex + ey*ey);
-        if (d < LINK_DIST) {
-          const a = (1 - d/LINK_DIST) * 0.18;
-          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-          ctx.strokeStyle = `rgba(0,200,168,${a})`; ctx.lineWidth = 0.75; ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-/* ─── Orbital nodes ─── */
-(function() {
-  const wrap = document.getElementById('orbital-wrap');
-  if (!wrap) return;
-  const nodes = [
-    { label: 'AI', cls: 'node-teal', angle: 20, ring: 80 },
-    { label: 'Cloud', cls: 'node-amber', angle: 200, ring: 80 },
-    { label: 'Web', cls: 'node-teal', angle: 340, ring: 130 },
-    { label: 'Mobile', cls: 'node-purple', angle: 80, ring: 130 },
-    { label: 'Games', cls: 'node-amber', angle: 220, ring: 190 },
-    { label: 'R&D', cls: 'node-teal', angle: 130, ring: 190 },
-    { label: 'DevOps', cls: 'node-purple', angle: 300, ring: 215 },
-    { label: 'Staff', cls: 'node-teal', angle: 50, ring: 215 },
-  ];
-  const cx = 220, cy = 220;
-  nodes.forEach(n => {
-    const el = document.createElement('div');
-    el.className = `orb-node ${n.cls}`;
-    el.textContent = n.label;
-    wrap.appendChild(el);
-  });
-  let t = 0;
-  const nodeEls = wrap.querySelectorAll('.orb-node');
-  function animOrbit() {
-    t += 0.004;
-    nodes.forEach((n, i) => {
-      const angle = (n.angle * Math.PI / 180) + t * (i % 2 === 0 ? 1 : -0.7);
-      const ox = cx + n.ring * Math.cos(angle) - 18;
-      const oy = cy + n.ring * Math.sin(angle) - 18;
-      nodeEls[i].style.left = ox + 'px';
-      nodeEls[i].style.top = oy + 'px';
-    });
-    requestAnimationFrame(animOrbit);
-  }
-  animOrbit();
-})();
-
-/* ─── Counter animation ─── */
-function animateCounter(el, target, duration) {
-  const start = performance.now();
-  function step(now) {
-    const p = Math.min((now - start) / duration, 1);
-    const ease = 1 - Math.pow(1 - p, 3);
-    el.textContent = Math.round(ease * target);
-    if (p < 1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-const cObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { animateCounter(e.target, parseInt(e.target.dataset.target), 1600); cObs.unobserve(e.target); }
-  });
-}, { threshold: 0.5 });
-document.querySelectorAll('.counter').forEach(el => cObs.observe(el));
-
-/* ─── Scroll reveal ─── */
-const rObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); rObs.unobserve(e.target); } });
-}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-document.querySelectorAll('.reveal').forEach(el => rObs.observe(el));
-
-/* ─── Product canvas art ─── */
-function drawJiVault(canvas) {
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width = canvas.offsetWidth;
-  const H = canvas.height = canvas.offsetHeight;
-  ctx.fillStyle = '#0C1F38'; ctx.fillRect(0, 0, W, H);
-  const cx = W/2, cy = H/2;
-  const grad = ctx.createRadialGradient(cx, cy-20, 10, cx, cy, 90);
-  grad.addColorStop(0, 'rgba(0,200,168,0.25)'); grad.addColorStop(1, 'rgba(0,200,168,0)');
-  ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
-  ctx.strokeStyle = 'rgba(0,200,168,0.07)'; ctx.lineWidth = 1;
-  const hw = 28, hh = 16;
-  for (let row = -1; row < H/hh + 1; row++) {
-    for (let col = -1; col < W/hw + 1; col++) {
-      const ox = col * hw * 1.5 + (row % 2 === 0 ? 0 : hw*0.75), oy = row * hh;
-      ctx.beginPath();
-      for (let a = 0; a < 6; a++) {
-        const ang = (a * 60 - 30) * Math.PI / 180;
-        const px = ox + hw/2 * Math.cos(ang), py = oy + hh * Math.sin(ang);
-        a === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-      }
-      ctx.closePath(); ctx.stroke();
-    }
-  }
-  ctx.save(); ctx.translate(cx, cy - 10);
-  ctx.strokeStyle = 'rgba(0,200,168,0.7)'; ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(0, -34); ctx.lineTo(28, -22); ctx.lineTo(28, 8); ctx.quadraticCurveTo(28, 30, 0, 40);
-  ctx.quadraticCurveTo(-28, 30, -28, 8); ctx.lineTo(-28, -22); ctx.closePath(); ctx.stroke();
-  ctx.strokeStyle = 'rgba(0,200,168,0.35)'; ctx.lineWidth = 8; ctx.stroke();
-  ctx.strokeStyle = 'rgba(0,200,168,0.9)'; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(-10, 2); ctx.lineTo(-4, 10); ctx.lineTo(14, -10); ctx.stroke();
-  ctx.restore();
-}
-
-function drawJiQuest(canvas) {
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width = canvas.offsetWidth;
-  const H = canvas.height = canvas.offsetHeight;
-  ctx.fillStyle = '#0C1F38'; ctx.fillRect(0, 0, W, H);
-  const bars = [0.4, 0.65, 0.55, 0.8, 0.72, 0.9, 0.6, 0.75, 0.95, 0.68];
-  const bw = 14, gap = 10;
-  const totalW = bars.length * (bw + gap) - gap;
-  const startX = (W - totalW) / 2;
-  const maxH = H * 0.65, baseY = H * 0.8;
-  bars.forEach((v, i) => {
-    ctx.fillStyle = i === bars.length - 1 ? '#00C8A8' : `rgba(0,200,168,${0.2 + v * 0.3})`;
-    ctx.fillRect(startX + i * (bw + gap), baseY - v * maxH, bw, v * maxH);
-  });
-  ctx.strokeStyle = 'rgba(0,200,168,0.2)'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(startX - 10, baseY); ctx.lineTo(startX + totalW + 10, baseY); ctx.stroke();
-  ctx.beginPath(); ctx.strokeStyle = 'rgba(232,160,32,0.7)'; ctx.lineWidth = 2;
-  bars.forEach((v, i) => {
-    const x = startX + i * (bw + gap) + bw/2, y = baseY - v * maxH;
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-  ctx.stroke();
-  ctx.fillStyle = 'rgba(0,200,168,0.6)'; ctx.font = '10px -apple-system, sans-serif';
-  ctx.textAlign = 'center'; ctx.fillText('Interview Readiness Score', W/2, 24);
-}
-
-window.addEventListener('load', () => {
-  const jv = document.getElementById('cv-jivault');
-  if (jv) drawJiVault(jv);
-  const jq = document.getElementById('cv-jiquest');
-  if (jq) drawJiQuest(jq);
-});
-
-/* ─── About canvas ─── */
-(function() {
-  const canvas = document.getElementById('about-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width = canvas.offsetWidth || 600;
-  const H = canvas.height = 400;
-  ctx.fillStyle = '#020D1F'; ctx.fillRect(0, 0, W, H);
-  const grad = ctx.createLinearGradient(0, 0, W, H);
-  grad.addColorStop(0, 'rgba(0,200,168,0.08)'); grad.addColorStop(1, 'rgba(232,160,32,0.04)');
-  ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = 'rgba(0,200,168,0.08)';
-  for (let x = 20; x < W; x += 30) {
-    for (let y = 20; y < H; y += 30) {
-      ctx.beginPath(); ctx.arc(x, y, 1.5, 0, Math.PI*2); ctx.fill();
-    }
-  }
-  const pts = [
-    {x: W*0.15, y: H*0.25, label: '2016', c: '#00C8A8'},
-    {x: W*0.32, y: H*0.6,  label: '2018', c: '#00C8A8'},
-    {x: W*0.5,  y: H*0.3,  label: '2020', c: '#E8A020'},
-    {x: W*0.68, y: H*0.65, label: '2022', c: '#00C8A8'},
-    {x: W*0.85, y: H*0.35, label: '2024', c: '#9B7FEA'},
-  ];
-  for (let i = 0; i < pts.length - 1; i++) {
-    const a = pts[i], b = pts[i+1];
-    const g2 = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
-    g2.addColorStop(0, a.c + '80'); g2.addColorStop(1, b.c + '80');
-    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-    ctx.strokeStyle = g2; ctx.lineWidth = 1.5; ctx.stroke();
-  }
-  pts.forEach(p => {
-    ctx.beginPath(); ctx.arc(p.x, p.y, 20, 0, Math.PI*2);
-    ctx.fillStyle = p.c + '1A'; ctx.fill();
-    ctx.strokeStyle = p.c + 'AA'; ctx.lineWidth = 1.5; ctx.stroke();
-    ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI*2);
-    ctx.fillStyle = p.c; ctx.fill();
-    ctx.fillStyle = p.c; ctx.font = 'bold 11px -apple-system, sans-serif';
-    ctx.textAlign = 'center'; ctx.fillText(p.label, p.x, p.y - 28);
-  });
-})();
-</script>
+<script src="assets/site.js" defer></script>
 </body>
 </html>

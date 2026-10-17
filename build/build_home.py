@@ -66,7 +66,7 @@ about = """<section class="section">
     <div class="reveal">
       <p class="eyebrow">About Kirosys</p>
       <h2>Building Technology for a Better Tomorrow</h2>
-      <p class="lead">Kirosys Technologies is a software development and IT services company focused on
+      <p class="lead">Kirosys Technology is a software development and IT services company focused on
         creating scalable, secure and future-ready digital solutions. We combine domain expertise with
         modern technology to help businesses, organisations and government entities solve real problems
         and unlock new opportunities.</p>
@@ -83,7 +83,7 @@ about = """<section class="section">
       <figure class="quote-card">
         <span class="quote-mark" aria-hidden="true">&ldquo;</span>
         <p>We believe in using technology as a force for good &mdash; empowering businesses and people to achieve more.</p>
-        <cite>&mdash; Kirosys Technologies</cite>
+        <cite>&mdash; Kirosys Technology</cite>
       </figure>
     </div>
   </div>
@@ -148,8 +148,8 @@ testimonials = """<section class="section section--tint">
 """ % testimonials_block()
 
 page("index.html",
-     "Kirosys Technologies &mdash; Software, Cloud &amp; IT Services Company",
-     "Kirosys Technologies Private Limited designs, develops and delivers custom software, mobile apps, "
+     "Kirosys Technology &mdash; Software, Cloud &amp; IT Services Company",
+     "Kirosys Technology designs, develops and delivers custom software, mobile apps, "
      "cloud, AI and IT consulting solutions for businesses, institutions and government teams.",
      hero + stats + about + services + industries + process + work + testimonials + cta_band(),
      extrahead=JSONLD)

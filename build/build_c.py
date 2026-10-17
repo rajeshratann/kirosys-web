@@ -99,8 +99,8 @@ contact_body += """<section class="section section--tint">
     ("rocket", "amber", "The outcome", "What has to be true for this to have been worth doing."),
 ]))
 
-page("contact.html", "Contact Kirosys Technologies &mdash; Start a Project",
-     "Contact Kirosys Technologies Private Limited for software development, mobile apps, cloud, AI, "
+page("contact.html", "Contact Kirosys Technology &mdash; Start a Project",
+     "Contact Kirosys Technology for software development, mobile apps, cloud, AI, "
      "IT consulting and support. Patna, Bihar, India.", contact_body)
 print("contact.html")
 
@@ -117,7 +117,7 @@ def legal(slug, crumb, eyebrow, h1, lead, sections, title, desc):
       %s
       <h2>Contact</h2>
       <p>Questions about this page can be sent to <a href="mailto:%s">%s</a>, or by post to
-        Kirosys Technologies Private Limited, New Dariyapur Colony, Suryamandir, Khairatali,
+        Kirosys Technology, New Dariyapur Colony, Suryamandir, Khairatali,
         Patna &ndash; 804453, Bihar, India.</p>
     </div>
   </div>
@@ -128,7 +128,7 @@ def legal(slug, crumb, eyebrow, h1, lead, sections, title, desc):
 
 
 legal("privacy.html", "Privacy Policy", "Legal", "Privacy Policy",
-      "How Kirosys Technologies Private Limited handles information submitted through this website.",
+      "How Kirosys Technology handles information submitted through this website.",
       [
         ("Information we collect",
          ["We collect the information you choose to submit through forms on this website &mdash; typically "
@@ -155,34 +155,34 @@ legal("privacy.html", "Privacy Policy", "Legal", "Privacy Policy",
          ["You may request access to, correction of, or deletion of the information you have submitted by "
           "contacting us. We will respond within a reasonable period."]),
       ],
-      "Privacy Policy | Kirosys Technologies",
-      "How Kirosys Technologies Private Limited collects, uses, shares and protects information submitted through this website.")
+      "Privacy Policy | Kirosys Technology",
+      "How Kirosys Technology collects, uses, shares and protects information submitted through this website.")
 
 legal("terms.html", "Terms &amp; Conditions", "Legal", "Terms &amp; Conditions",
-      "These terms govern use of the Kirosys Technologies website. Project work is governed by separate written agreements.",
+      "These terms govern use of the Kirosys Technology website. Project work is governed by separate written agreements.",
       [
         ("Website use",
-         ["You may use this website to learn about Kirosys Technologies Private Limited and to contact us. "
+         ["You may use this website to learn about Kirosys Technology and to contact us. "
           "You agree not to misuse the website, attempt unauthorised access, or interfere with its normal operation."]),
         ("No engagement by itself",
          ["The content of this website is informational. Submitting a form does not create a client engagement, "
           "guarantee acceptance of a project, or form a service agreement. We may decline enquiries at our discretion. "
           "Any engagement is governed by a separate written agreement signed by both parties."]),
         ("Content and intellectual property",
-         ["Website text, visuals, branding, product names and layouts are owned by Kirosys Technologies Private "
+         ["Website text, visuals, branding, product names and layouts are owned by Kirosys Technology Private "
           "Limited or used with permission. You may not copy, republish or reuse them without written approval."]),
         ("Third-party services",
          ["This website references external platforms, app stores and technologies. We are not responsible for "
           "third-party sites, tools or their policies."]),
         ("Limitation of liability",
          ["This website is provided on an &ldquo;as is&rdquo; basis. To the maximum extent permitted by law, "
-          "Kirosys Technologies Private Limited is not liable for any damages arising from use of this website."]),
+          "Kirosys Technology is not liable for any damages arising from use of this website."]),
         ("Governing law",
          ["These terms are governed by the laws of India, and the courts at Patna, Bihar have jurisdiction over "
           "any dispute arising from use of this website."]),
       ],
-      "Terms &amp; Conditions | Kirosys Technologies",
-      "Terms governing the use of the Kirosys Technologies Private Limited website.")
+      "Terms &amp; Conditions | Kirosys Technology",
+      "Terms governing the use of the Kirosys Technology website.")
 
 # ───────────────────────── THANKS / 404 ─────────────────────────
 thanks_body = page_hero(
@@ -209,8 +209,8 @@ thanks_body += """<section class="section">
         ("briefcase", "violet", "Our work", "Products we have shipped and continue to run.", "work.html"),
         ("users", "cyan", "About Kirosys", "Who we are, how we work and our company details.", "about.html"),
     ]))
-page("thanks.html", "Thank You | Kirosys Technologies",
-     "Your message has been sent to the Kirosys Technologies team.", thanks_body)
+page("thanks.html", "Thank You | Kirosys Technology",
+     "Your message has been sent to the Kirosys Technology team.", thanks_body)
 print("thanks.html")
 
 nf_body = page_hero(
@@ -237,8 +237,8 @@ nf_body += """<section class="section">
         ("briefcase", "cyan", "Our work", "Products we have shipped.", "work.html"),
         ("send", "amber", "Contact", "Start a conversation.", "contact.html"),
     ]))
-page("404.html", "Page Not Found | Kirosys Technologies",
-     "The page you were looking for could not be found on the Kirosys Technologies website.", nf_body)
+page("404.html", "Page Not Found | Kirosys Technology",
+     "The page you were looking for could not be found on the Kirosys Technology website.", nf_body)
 print("404.html")
 
 # ───────────────────────── REDIRECT STUBS ─────────────────────────
@@ -247,7 +247,7 @@ REDIRECT = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>%s | Kirosys Technologies</title>
+<title>%s | Kirosys Technology</title>
 <link rel="canonical" href="https://kirosys.in/%s">
 <meta name="robots" content="noindex">
 <meta http-equiv="refresh" content="0; url=%s">

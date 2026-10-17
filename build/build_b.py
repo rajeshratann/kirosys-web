@@ -50,9 +50,9 @@ work_body += """<section class="section">
 work_body += cta_band("Have something you want built?",
                       "Bring us the brief, the backlog or the broken system. We will help you find the shortest useful path.")
 
-page("work.html", "Our Work &mdash; Products &amp; Platforms by Kirosys Technologies",
+page("work.html", "Our Work &mdash; Products &amp; Platforms by Kirosys Technology",
      "JiVault, JiQuest, Kitty Gaming, Battle Brain and custom client platforms &mdash; products designed, "
-     "built and supported by Kirosys Technologies Private Limited.",
+     "built and supported by Kirosys Technology.",
      work_body)
 print("work.html")
 
@@ -145,9 +145,9 @@ careers_body += cta_band("Not looking, but curious?",
                          "Introduce yourself anyway. We keep good profiles on file and come back to them when a track opens.",
                          ("mailto:%s" % EMAIL, "Email Us"), ("about.html", "Learn About Kirosys"))
 
-page("careers.html", "Careers &mdash; Engineering, Design &amp; Cloud Roles | Kirosys Technologies",
-     "Open engineering, mobile, AI, cloud, game development and design tracks at Kirosys Technologies "
-     "Private Limited, Patna.", careers_body)
+page("careers.html", "Careers &mdash; Engineering, Design &amp; Cloud Roles | Kirosys Technology",
+     "Open engineering, mobile, AI, cloud, game development and design tracks at Kirosys Technology, "
+     "Patna.", careers_body)
 print("careers.html")
 
 # ───────────────────────── BLOG ─────────────────────────
@@ -187,7 +187,7 @@ blog_body += """<section class="section">
 blog_body += cta_band("Would rather just talk it through?",
                       "Our team is happy to share how we would approach your problem &mdash; no article required.")
 
-page("blog.html", "Insights &amp; Engineering Notes | Kirosys Technologies",
+page("blog.html", "Insights &amp; Engineering Notes | Kirosys Technology",
      "Practical write-ups on software architecture, cloud, delivery and applied AI from the Kirosys "
      "Technologies engineering team.", blog_body)
 print("blog.html")

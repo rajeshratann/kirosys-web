@@ -1,6 +1,6 @@
-# Kirosys Technologies — website
+# Kirosys Technology — website
 
-Static marketing site for **Kirosys Technologies Private Limited** (kirosys.in),
+Static marketing site for **Kirosys Technology** (kirosys.in),
 served by GitHub Pages from the `main` branch root.
 No framework, no build step required to deploy: push and Pages publishes the root as-is.
 

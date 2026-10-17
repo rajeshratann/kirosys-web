@@ -27,7 +27,7 @@ FACTS = [
 about_body = page_hero(
     "About", "About Kirosys",
     "A technology partner built for the long term.",
-    "Kirosys Technologies Private Limited is a software development and IT services company "
+    "Kirosys Technology is a software development and IT services company "
     "incorporated in Bihar in 2023. We build secure, scalable and future-ready digital solutions "
     "for businesses, institutions and government teams.",
     '<div class="hero-actions"><a class="btn btn-primary" href="contact.html">Work With Us %s</a>'
@@ -57,7 +57,7 @@ about_body += """<section class="section">
       <figure class="quote-card">
         <span class="quote-mark" aria-hidden="true">&ldquo;</span>
         <p>We believe in using technology as a force for good &mdash; empowering businesses and people to achieve more.</p>
-        <cite>&mdash; Kirosys Technologies</cite>
+        <cite>&mdash; Kirosys Technology</cite>
       </figure>
     </div>
   </div>
@@ -80,7 +80,7 @@ about_body += """<section class="section">
     <div class="section-head reveal">
       <p class="eyebrow">Company information</p>
       <h2>Registered and accountable</h2>
-      <p class="lead">Kirosys Technologies Private Limited is a company limited by shares, constituted
+      <p class="lead">Kirosys Technology is a company limited by shares, constituted
         under the Companies Act, 2013. The details below are drawn from our incorporation documents.</p>
     </div>
     <div class="split split--top">
@@ -123,8 +123,8 @@ about_body += """<section class="section section--tint">
 about_body += cta_band("Let&rsquo;s talk about what you are building",
                        "Tell us the problem, the timeline and the constraints. We will come back with a practical path.")
 
-page("about.html", "About Kirosys Technologies &mdash; Company, Values &amp; Leadership",
-     "Kirosys Technologies Private Limited is a software and IT services company incorporated in Bihar in 2023, "
+page("about.html", "About Kirosys Technology &mdash; Company, Values &amp; Leadership",
+     "Kirosys Technology is a software and IT services company incorporated in Bihar in 2023, "
      "building secure and scalable digital solutions for business, institutional and government clients.",
      about_body, extrahead=JSONLD)
 print("about.html")
@@ -206,7 +206,7 @@ services_body += cta_band()
 
 page("services.html", "Services &mdash; Software, Mobile, Cloud, AI &amp; IT Consulting | Kirosys",
      "Custom software development, mobile apps, cloud and DevOps, AI and data solutions, IT consulting "
-     "and web portal development from Kirosys Technologies Private Limited.",
+     "and web portal development from Kirosys Technology.",
      services_body)
 print("services.html")
 
@@ -250,7 +250,7 @@ industries_body += """<section class="section">
 industries_body += cta_band()
 
 page("industries.html", "Industries &mdash; Healthcare, FinTech, Education, Government | Kirosys",
-     "Kirosys Technologies builds software for healthcare, fintech, education, e-commerce, government "
+     "Kirosys Technology builds software for healthcare, fintech, education, e-commerce, government "
      "and logistics teams &mdash; with sector context shaping every design decision.",
      industries_body)
 print("industries.html")

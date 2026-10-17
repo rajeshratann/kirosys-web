@@ -12,7 +12,7 @@ DOC = """<!DOCTYPE html>
 <meta name="description" content="__DESC__">
 <link rel="canonical" href="https://kirosys.in/__SLUG__">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Kirosys Technologies">
+<meta property="og:site_name" content="Kirosys Technology">
 <meta property="og:title" content="__TITLE__">
 <meta property="og:description" content="__DESC__">
 <meta property="og:url" content="https://kirosys.in/__SLUG__">
@@ -47,12 +47,12 @@ JSONLD = """<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Kirosys Technologies",
-  "legalName": "Kirosys Technologies Private Limited",
+  "name": "Kirosys Technology",
+  "legalName": "Kirosys Technology",
   "url": "https://kirosys.in/",
   "logo": "https://kirosys.in/assets/img/logo-720.png",
   "image": "https://kirosys.in/assets/img/og-cover.jpg",
-  "description": "Kirosys Technologies Private Limited is a software development and IT services company building secure, scalable and future-ready digital solutions.",
+  "description": "Kirosys Technology is a software development and IT services company building secure, scalable and future-ready digital solutions.",
   "foundingDate": "2023-07-13",
   "email": "support@kirosys.in",
   "telephone": "+91-82988-66066",
@@ -96,9 +96,9 @@ def header(active):
         for href, label in NAV)
     return """<header class="site-header">
   <div class="container nav">
-    <a class="brand" href="index.html" aria-label="Kirosys Technologies &mdash; home">
+    <a class="brand" href="index.html" aria-label="Kirosys Technology &mdash; home">
       <img src="assets/img/mark-128.png" alt="" width="38" height="38" decoding="async">
-      <span class="brand-text"><span class="brand-name">KIROSYS</span><span class="brand-sub">Technologies</span></span>
+      <span class="brand-text"><span class="brand-name">KIROSYS</span><span class="brand-sub">Technology</span></span>
     </a>
     <nav class="nav-links" aria-label="Primary">%s</nav>
     <div class="nav-actions">
@@ -121,7 +121,7 @@ def footer():
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="assets/img/logo-dark-720.png" alt="Kirosys Technologies" width="186" height="47" loading="lazy">
+        <img src="assets/img/logo-dark-720.png" alt="Kirosys Technology" width="186" height="47" loading="lazy">
         <p>Engineering better possibilities through technology, innovation and people.</p>
         <!-- Social profiles: add the real URLs, then delete these comment markers.
         <div class="socials">
@@ -149,7 +149,7 @@ def footer():
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; <span data-year>2026</span> Kirosys Technologies Private Limited. All rights reserved.</span>
+      <span>&copy; <span data-year>2026</span> Kirosys Technology. All rights reserved.</span>
       <nav aria-label="Legal">
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms &amp; Conditions</a>
@@ -202,7 +202,7 @@ def page_hero(crumb, eyebrow, h1, lead, actions=""):
 
 
 def cta_band(h2="Ready to Build a Smarter Tomorrow?",
-             p="Partner with Kirosys Technologies and turn your ideas into real-world solutions.",
+             p="Partner with Kirosys Technology and turn your ideas into real-world solutions.",
              primary=("contact.html", "Get in Touch"), secondary=("contact.html#quote", "Request a Quote")):
     return """<section class="cta-band on-dark">
   <div class="container cta-inner reveal">

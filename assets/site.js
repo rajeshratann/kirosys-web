@@ -1,4 +1,4 @@
-/* Kirosys Technologies — site behaviour
+/* Kirosys Technology — site behaviour
    Progressive enhancement only: every page renders fully without JS. */
 (function () {
   'use strict';
